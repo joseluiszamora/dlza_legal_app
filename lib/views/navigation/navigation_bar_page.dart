@@ -1,0 +1,175 @@
+import 'package:dlza_legal_app/core/constants/app_colors.dart';
+import 'package:dlza_legal_app/core/constants/app_defaults.dart';
+import 'package:dlza_legal_app/core/layouts/layout_main.dart';
+import 'package:dlza_legal_app/views/contract/contract_page.dart';
+import 'package:dlza_legal_app/views/home/home_page.dart';
+import 'package:dlza_legal_app/views/navigation/components/header_section.dart';
+import 'package:dlza_legal_app/views/personal/personal_page.dart';
+import 'package:flutter/material.dart';
+import 'package:google_nav_bar/google_nav_bar.dart';
+import 'package:line_icons/line_icons.dart';
+
+class NavigationBarPage extends StatefulWidget {
+  const NavigationBarPage({super.key});
+
+  @override
+  State<NavigationBarPage> createState() => _NavigationBarPageState();
+}
+
+class _NavigationBarPageState extends State<NavigationBarPage> {
+  int _pageSelected = 1;
+  final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
+
+  @override
+  Widget build(BuildContext context) {
+    //* Pages List
+    List<Widget> pages = [
+      const PersonalPage(),
+      const HomePage(),
+      const ContractPage(),
+    ];
+    // const String avatarUrl =
+    //     'https://placeholder.pics/svg/100/DEDEDE/555555/profile';
+
+    // const String location = 'La Paz, Bolivia';
+
+    return MaterialApp(
+      home: Scaffold(
+        key: _scaffoldKey,
+        appBar: HeaderSection(
+          openDrawer: () => _scaffoldKey.currentState?.openDrawer(),
+        ),
+        drawer: _buildDrawer(context),
+
+        body: AnimatedSwitcher(
+          duration: const Duration(milliseconds: 600),
+          child: LayoutMain(content: pages[_pageSelected]),
+        ),
+        bottomNavigationBar: Container(
+          decoration: BoxDecoration(
+            color: Colors.white,
+            borderRadius: BorderRadius.circular(AppDefaults.margin),
+            boxShadow: [
+              BoxShadow(blurRadius: 20, color: Colors.black.withAlpha(1)),
+            ],
+          ),
+          child: SafeArea(
+            child: Container(
+              padding: const EdgeInsets.symmetric(
+                horizontal: 15.0,
+                vertical: 8,
+              ),
+              child: GNav(
+                curve: Curves.easeIn,
+                rippleColor: Colors.grey[300]!,
+                hoverColor: Colors.red[100]!,
+                gap: 8,
+                activeColor: AppColors.primary,
+                iconSize: 30,
+                padding: EdgeInsets.symmetric(horizontal: 20, vertical: 12),
+                duration: Duration(milliseconds: 400),
+                tabBackgroundColor: Colors.grey[100]!,
+                color: Colors.black,
+                tabs: [
+                  GButton(icon: LineIcons.userCircle, text: 'Personas'),
+                  GButton(icon: LineIcons.home, text: 'Inicio'),
+                  GButton(icon: LineIcons.fileContract, text: 'Contractos'),
+                ],
+                selectedIndex: _pageSelected,
+                onTabChange: (index) {
+                  setState(() {
+                    _pageSelected = index;
+                  });
+                },
+              ),
+            ),
+          ),
+        ),
+      ),
+    );
+  }
+
+  Widget _buildDrawer(BuildContext context) {
+    return Drawer(
+      child: ListView(
+        padding: EdgeInsets.zero,
+        children: [
+          _buildDrawerHeader(),
+          _buildDrawerItem(
+            icon: Icons.person,
+            text: 'Perfil',
+            onTap: () => _navigateTo(context, '/profile'),
+          ),
+          _buildDrawerItem(
+            icon: Icons.history,
+            text: 'Historial',
+            onTap: () => _navigateTo(context, '/history'),
+          ),
+          _buildDrawerItem(
+            icon: Icons.settings,
+            text: 'Configuración',
+            onTap: () => _navigateTo(context, '/settings'),
+          ),
+          Divider(),
+          _buildDrawerItem(
+            icon: Icons.help,
+            text: 'Ayuda',
+            onTap: () => _navigateTo(context, '/help'),
+          ),
+          _buildDrawerItem(
+            icon: Icons.exit_to_app,
+            text: 'Cerrar sesión',
+            onTap: () => _logout(context),
+          ),
+        ],
+      ),
+    );
+  }
+
+  Widget _buildDrawerHeader() {
+    return DrawerHeader(
+      decoration: BoxDecoration(color: const Color(0xFF0bbfdf)),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        mainAxisAlignment: MainAxisAlignment.end,
+        children: [
+          CircleAvatar(
+            radius: 30,
+            backgroundImage: NetworkImage('https://example.com/profile.jpg'),
+          ),
+          SizedBox(height: 10),
+          Text(
+            'Nombre del Usuario',
+            style: TextStyle(
+              color: Colors.white,
+              fontSize: 18,
+              fontWeight: FontWeight.bold,
+            ),
+          ),
+          Text(
+            'usuario@example.com',
+            style: TextStyle(color: Colors.white70, fontSize: 14),
+          ),
+        ],
+      ),
+    );
+  }
+
+  Widget _buildDrawerItem({
+    required IconData icon,
+    required String text,
+    required VoidCallback onTap,
+  }) {
+    return ListTile(leading: Icon(icon), title: Text(text), onTap: onTap);
+  }
+
+  void _navigateTo(BuildContext context, String route) {
+    Navigator.pop(context); // Cierra el drawer
+    Navigator.pushNamed(context, route);
+  }
+
+  void _logout(BuildContext context) {
+    Navigator.pop(context); // Cierra el drawer
+    // Lógica para cerrar sesión
+  }
+}

@@ -1,0 +1,160 @@
+class Employee {
+  final int id;
+  final String name;
+  final String lastName;
+  final String area;
+  final String department;
+  final String position;
+  final String email;
+  final String phone;
+  final String address;
+  final String image;
+
+  Employee({
+    required this.id,
+    required this.name,
+    required this.lastName,
+    required this.area,
+    required this.department,
+    required this.position,
+    required this.email,
+    required this.phone,
+    required this.address,
+    required this.image,
+  });
+}
+
+enum Department {
+  legal,
+  administracion,
+  contabilidad,
+  recursosHumanos,
+  marketing,
+  tecnologia,
+  ventas,
+  produccion,
+  logistica,
+}
+
+final List<Employee> employees = [
+  Employee(
+    id: 1,
+    name: 'Juan',
+    lastName: 'Pérez',
+    area: 'Administración',
+    department: Department.administracion.name,
+    position: 'Gerente',
+    email: 'demo.qmail.bo',
+    phone: '123456789',
+    address: 'Calle Falsa 123',
+    image: 'https://randomuser.me/api/portraits/men/1.jpg',
+  ),
+  Employee(
+    id: 2,
+    name: 'Ana',
+    lastName: 'Gómez',
+    area: 'Recursos Humanos',
+    department: Department.recursosHumanos.name,
+    position: 'Analista',
+    email: 'demo.qmail.bo',
+    phone: '987654321',
+    address: 'Avenida Siempre Viva 456',
+    image: 'https://randomuser.me/api/portraits/women/2.jpg',
+  ),
+  Employee(
+    id: 3,
+    name: 'Luis',
+    lastName: 'Martínez',
+    area: 'Contabilidad',
+    department: Department.contabilidad.name,
+    position: 'Contador',
+    email: 'demo.qmail.bo',
+    phone: '456789123',
+    address: 'Calle Falsa 789',
+    image: 'https://randomuser.me/api/portraits/men/3.jpg',
+  ),
+  Employee(
+    id: 4,
+    name: 'María',
+    lastName: 'López',
+    area: 'Marketing',
+    department: Department.marketing.name,
+    position: 'Especialista',
+    email: 'demo.qmail.bo',
+    phone: '321654987',
+    address: 'Avenida Siempre Viva 123',
+    image: 'https://randomuser.me/api/portraits/women/4.jpg',
+  ),
+  Employee(
+    id: 5,
+    name: 'Carlos',
+    lastName: 'Hernández',
+    area: 'Tecnología',
+    department: Department.tecnologia.name,
+    position: 'Desarrollador',
+    email: 'demo.qmail.bo',
+    phone: '654321789',
+    address: 'Calle Falsa 456',
+    image: 'https://randomuser.me/api/portraits/men/5.jpg',
+  ),
+  Employee(
+    id: 6,
+    name: 'Laura',
+    lastName: 'García',
+    area: 'Ventas',
+    department: Department.ventas.name,
+    position: 'Ejecutiva',
+    email: 'demo.qmail.bo',
+    phone: '789123456',
+    address: 'Avenida Siempre Viva 789',
+    image: 'https://randomuser.me/api/portraits/women/6.jpg',
+  ),
+  Employee(
+    id: 7,
+    name: 'Pedro',
+    lastName: 'Ramírez',
+    area: 'Producción',
+    department: Department.produccion.name,
+    position: 'Operario',
+    email: 'demo.qmail.bo',
+    phone: '159753486',
+    address: 'Calle Falsa 321',
+    image: 'https://randomuser.me/api/portraits/men/7.jpg',
+  ),
+  Employee(
+    id: 8,
+    name: 'Sofía',
+    lastName: 'Torres',
+    area: 'Logística',
+    department: Department.logistica.name,
+    position: 'Coordinadora',
+    email: 'demo.qmail.bo',
+    phone: '753159486',
+    address: 'Avenida Siempre Viva 321',
+    image: 'https://randomuser.me/api/portraits/women/8.jpg',
+  ),
+  Employee(
+    id: 9,
+    name: 'Diego',
+    lastName: 'Fernández',
+    area: 'Legal',
+    department: Department.legal.name,
+    position: 'Abogado',
+    email: 'demo.qmail.bo',
+    phone: '951753486',
+    address: 'Calle Falsa 654',
+    image: 'https://randomuser.me/api/portraits/men/9.jpg',
+  ),
+  Employee(
+    id: 10,
+    name: 'Valentina',
+    lastName: 'Cruz',
+    area: 'Recursos Humanos',
+    department: Department.recursosHumanos.name,
+    position: 'Asistente',
+    email: 'demo.qmail.bo',
+    phone: '852963741',
+    address: 'Avenida Siempre Viva 654',
+    image: 'https://randomuser.me/api/portraits/women/10.jpg',
+  ),
+];
