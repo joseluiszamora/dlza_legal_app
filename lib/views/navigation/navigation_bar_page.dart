@@ -1,7 +1,7 @@
 import 'package:dlza_legal_app/core/constants/app_colors.dart';
 import 'package:dlza_legal_app/core/constants/app_defaults.dart';
 import 'package:dlza_legal_app/core/layouts/layout_main.dart';
-import 'package:dlza_legal_app/views/contract/contract_page.dart';
+import 'package:dlza_legal_app/views/agency/agency_page.dart';
 import 'package:dlza_legal_app/views/home/home_page.dart';
 import 'package:dlza_legal_app/views/navigation/components/header_section.dart';
 import 'package:dlza_legal_app/views/personal/personal_page.dart';
@@ -26,7 +26,7 @@ class _NavigationBarPageState extends State<NavigationBarPage> {
     List<Widget> pages = [
       const PersonalPage(),
       const HomePage(),
-      const ContractPage(),
+      const AgencyPage(),
     ];
     // const String avatarUrl =
     //     'https://placeholder.pics/svg/100/DEDEDE/555555/profile';

@@ -7,17 +7,44 @@ abstract class AgencyState extends Equatable {
   List<Object> get props => [];
 }
 
-// Estado inicial/cargando
 class AgencyLoading extends AgencyState {}
 
-// Estado cargado con datos
 class AgencyLoaded extends AgencyState {
   final List<Agency> agencies;
+  final List<Agency> filteredAgencies;
+  final String searchQuery;
+  final String? selectedCity;
 
-  const AgencyLoaded({required this.agencies});
+  const AgencyLoaded({
+    required this.agencies,
+    required this.filteredAgencies,
+    this.searchQuery = '',
+    this.selectedCity,
+  });
+
+  AgencyLoaded copyWith({
+    List<Agency>? agencies,
+    List<Agency>? filteredAgencies,
+    String? searchQuery,
+    String? selectedCity,
+    bool? clearCity,
+  }) {
+    return AgencyLoaded(
+      agencies: agencies ?? this.agencies,
+      filteredAgencies: filteredAgencies ?? this.filteredAgencies,
+      searchQuery: searchQuery ?? this.searchQuery,
+      selectedCity:
+          clearCity == true ? null : selectedCity ?? this.selectedCity,
+    );
+  }
 
   @override
-  List<Object> get props => [agencies];
+  List<Object> get props => [
+    agencies,
+    filteredAgencies,
+    searchQuery,
+    selectedCity ?? '',
+  ];
 }
 
 class AgencyDetailLoaded extends AgencyState {
@@ -29,7 +56,6 @@ class AgencyDetailLoaded extends AgencyState {
   List<Object> get props => [agency];
 }
 
-// Estado de error
 class AgencyError extends AgencyState {
   final String message;
 
