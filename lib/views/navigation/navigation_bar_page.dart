@@ -1,6 +1,7 @@
 import 'package:dlza_legal_app/core/constants/app_colors.dart';
 import 'package:dlza_legal_app/core/constants/app_defaults.dart';
 import 'package:dlza_legal_app/core/layouts/layout_main.dart';
+import 'package:dlza_legal_app/core/providers/theme_provider.dart';
 import 'package:dlza_legal_app/views/agency/agency_page.dart';
 import 'package:dlza_legal_app/views/home/home_page.dart';
 import 'package:dlza_legal_app/views/navigation/components/header_section.dart';
@@ -8,6 +9,7 @@ import 'package:dlza_legal_app/views/personal/personal_page.dart';
 import 'package:flutter/material.dart';
 import 'package:google_nav_bar/google_nav_bar.dart';
 import 'package:line_icons/line_icons.dart';
+import 'package:provider/provider.dart';
 
 class NavigationBarPage extends StatefulWidget {
   const NavigationBarPage({super.key});
@@ -28,60 +30,50 @@ class _NavigationBarPageState extends State<NavigationBarPage> {
       const HomePage(),
       const AgencyPage(),
     ];
-    // const String avatarUrl =
-    //     'https://placeholder.pics/svg/100/DEDEDE/555555/profile';
 
-    // const String location = 'La Paz, Bolivia';
-
-    return MaterialApp(
-      home: Scaffold(
-        key: _scaffoldKey,
-        appBar: HeaderSection(
-          openDrawer: () => _scaffoldKey.currentState?.openDrawer(),
+    return Scaffold(
+      key: _scaffoldKey,
+      appBar: HeaderSection(
+        openDrawer: () => _scaffoldKey.currentState?.openDrawer(),
+      ),
+      drawer: _buildDrawer(context),
+      body: AnimatedSwitcher(
+        duration: const Duration(milliseconds: 600),
+        child: LayoutMain(content: pages[_pageSelected]),
+      ),
+      bottomNavigationBar: Container(
+        decoration: BoxDecoration(
+          color: Colors.white,
+          borderRadius: BorderRadius.circular(AppDefaults.margin),
+          boxShadow: [
+            BoxShadow(blurRadius: 20, color: Colors.black.withAlpha(1)),
+          ],
         ),
-        drawer: _buildDrawer(context),
-
-        body: AnimatedSwitcher(
-          duration: const Duration(milliseconds: 600),
-          child: LayoutMain(content: pages[_pageSelected]),
-        ),
-        bottomNavigationBar: Container(
-          decoration: BoxDecoration(
-            color: Colors.white,
-            borderRadius: BorderRadius.circular(AppDefaults.margin),
-            boxShadow: [
-              BoxShadow(blurRadius: 20, color: Colors.black.withAlpha(1)),
-            ],
-          ),
-          child: SafeArea(
-            child: Container(
-              padding: const EdgeInsets.symmetric(
-                horizontal: 15.0,
-                vertical: 8,
-              ),
-              child: GNav(
-                curve: Curves.easeIn,
-                rippleColor: Colors.grey[300]!,
-                hoverColor: Colors.red[100]!,
-                gap: 8,
-                activeColor: AppColors.primary,
-                iconSize: 30,
-                padding: EdgeInsets.symmetric(horizontal: 20, vertical: 12),
-                duration: Duration(milliseconds: 400),
-                tabBackgroundColor: Colors.grey[100]!,
-                color: Colors.black,
-                tabs: [
-                  GButton(icon: LineIcons.userCircle, text: 'Personas'),
-                  GButton(icon: LineIcons.home, text: 'Inicio'),
-                  GButton(icon: LineIcons.fileContract, text: 'Contractos'),
-                ],
-                selectedIndex: _pageSelected,
-                onTabChange: (index) {
-                  setState(() {
-                    _pageSelected = index;
-                  });
-                },
-              ),
+        child: SafeArea(
+          child: Container(
+            padding: const EdgeInsets.symmetric(horizontal: 15.0, vertical: 8),
+            child: GNav(
+              curve: Curves.easeIn,
+              rippleColor: Colors.grey[300]!,
+              hoverColor: Colors.red[100]!,
+              gap: 8,
+              activeColor: AppColors.primary,
+              iconSize: 30,
+              padding: EdgeInsets.symmetric(horizontal: 20, vertical: 12),
+              duration: Duration(milliseconds: 400),
+              tabBackgroundColor: Colors.grey[100]!,
+              color: Colors.black,
+              tabs: [
+                GButton(icon: LineIcons.userCircle, text: 'Personas'),
+                GButton(icon: LineIcons.home, text: 'Inicio'),
+                GButton(icon: LineIcons.fileContract, text: 'Contractos'),
+              ],
+              selectedIndex: _pageSelected,
+              onTabChange: (index) {
+                setState(() {
+                  _pageSelected = index;
+                });
+              },
             ),
           ),
         ),
@@ -90,6 +82,8 @@ class _NavigationBarPageState extends State<NavigationBarPage> {
   }
 
   Widget _buildDrawer(BuildContext context) {
+    final themeProvider = Provider.of<ThemeProvider>(context);
+
     return Drawer(
       child: ListView(
         padding: EdgeInsets.zero,
@@ -110,7 +104,23 @@ class _NavigationBarPageState extends State<NavigationBarPage> {
             text: 'Configuración',
             onTap: () => _navigateTo(context, '/settings'),
           ),
-          Divider(),
+          // Selector de tema
+          ListTile(
+            leading: Icon(
+              themeProvider.isDarkMode ? Icons.dark_mode : Icons.light_mode,
+            ),
+            title: Text(
+              'Tema ${themeProvider.isDarkMode ? 'Oscuro' : 'Claro'}',
+            ),
+            trailing: Switch(
+              value: themeProvider.isDarkMode,
+              onChanged: (_) {
+                themeProvider.toggleTheme();
+              },
+              activeColor: Theme.of(context).colorScheme.primary,
+            ),
+          ),
+          const Divider(),
           _buildDrawerItem(
             icon: Icons.help,
             text: 'Ayuda',
@@ -170,6 +180,5 @@ class _NavigationBarPageState extends State<NavigationBarPage> {
 
   void _logout(BuildContext context) {
     Navigator.pop(context); // Cierra el drawer
-    // Lógica para cerrar sesión
   }
-}
+} // Lógica para cerrar sesión

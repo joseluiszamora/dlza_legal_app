@@ -35,6 +35,8 @@ dependencies:
   google_nav_bar: ^5.0.7
   intl: ^0.20.2
   line_icons: ^2.0.3
+  provider: ^6.1.5
+  shared_preferences: ^2.5.3
   supabase_flutter: ^2.9.0
   url_launcher: ^6.3.1
 
@@ -55,6 +57,15 @@ flutter:
   assets:
     - assets/
     - assets/images/
+
+  fonts:
+    - family: Kodchasan
+      fonts:
+        - asset: assets/fonts/Kodchasan-Regular.ttf
+        - asset: assets/fonts/Kodchasan-Bold.ttf
+        - asset: assets/fonts/Kodchasan-SemiBold.ttf
+        - asset: assets/fonts/Kodchasan-Light.ttf
+        - asset: assets/fonts/Kodchasan-Medium.ttf
   # To add assets to your application, add an assets section, like this:
   # assets:
   #   - images/a_dot_burr.jpeg

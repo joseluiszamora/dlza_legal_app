@@ -12,11 +12,18 @@ class AppTheme {
   static const Color errorColor = Color(0xFFE53935);
   static const Color successColor = Color(0xFF4CAF50);
   static const Color warningColor = Color(0xFFFF9800);
+  static const Color grayWhiteColor = Color(0xFFF3F2FB);
+  static const Color grayColor = Color(0xFFDEDEE2);
+  static const Color geraintBlueColor = Color(0xFF9b98A9);
+  static const Color bluishGrayColor = Color(0xFF676475);
+  static const Color bluishBlackColor = Color(0xFF21223B);
+  static const Color blueColor = Color(0xFF226AFE);
+  static const Color blueBlackColor = Color(0xFF07051C);
 
   static ThemeData lightTheme(BuildContext context) {
     return ThemeData(
       brightness: Brightness.light,
-      scaffoldBackgroundColor: Colors.white,
+      scaffoldBackgroundColor: grayWhiteColor,
       primaryColor: primaryColor,
       colorScheme: const ColorScheme.light(
         primary: primaryColor,
@@ -26,16 +33,16 @@ class AppTheme {
         background: Color(0xFFF5F5F5),
       ),
       indicatorColor: secondaryColor,
-      fontFamily: "Poppins",
+      fontFamily: 'Kodchasan',
       appBarTheme: const AppBarTheme(
-        backgroundColor: primaryColor,
+        backgroundColor: grayWhiteColor,
         elevation: 0,
         iconTheme: IconThemeData(color: Colors.white),
         titleTextStyle: TextStyle(
           color: Colors.white,
           fontSize: 20,
           fontWeight: FontWeight.w600,
-          fontFamily: "Poppins",
+          fontFamily: 'Kodchasan',
         ),
       ),
       cardTheme: CardTheme(
@@ -52,48 +59,59 @@ class AppTheme {
           fontSize: AppDefaults.fontSizeTitleLarge,
           color: AppColors.black,
           fontWeight: FontWeight.w600,
+          fontFamily: 'Kodchasan',
         ),
         titleMedium: TextStyle(
           fontSize: AppDefaults.fontSizeTitleMedium,
           color: AppColors.black,
           fontWeight: FontWeight.w600,
+          fontFamily: 'Kodchasan',
         ),
         titleSmall: TextStyle(
           fontSize: AppDefaults.fontSizeTitleSmall,
           color: AppColors.black,
           fontWeight: FontWeight.w600,
+          fontFamily: 'Kodchasan',
         ),
         labelMedium: TextStyle(
           color: AppColors.black,
           fontSize: AppDefaults.fontSizeLabelMedium,
+          fontFamily: 'Kodchasan',
         ),
         labelLarge: TextStyle(
           color: AppColors.black,
           fontSize: AppDefaults.fontSizeSubTitle,
+          fontFamily: 'Kodchasan',
         ),
         displayLarge: TextStyle(
           color: secondaryColor,
           fontWeight: FontWeight.bold,
+          fontFamily: 'Kodchasan',
         ),
         displayMedium: TextStyle(
           color: secondaryColor,
           fontWeight: FontWeight.bold,
+          fontFamily: 'Kodchasan',
         ),
         displaySmall: TextStyle(
           color: secondaryColor,
           fontWeight: FontWeight.w600,
+          fontFamily: 'Kodchasan',
         ),
         headlineLarge: TextStyle(
           color: secondaryColor,
           fontWeight: FontWeight.w600,
+          fontFamily: 'Kodchasan',
         ),
         headlineMedium: TextStyle(
           color: secondaryColor,
           fontWeight: FontWeight.w600,
+          fontFamily: 'Kodchasan',
         ),
         headlineSmall: TextStyle(
           color: secondaryColor,
           fontWeight: FontWeight.w600,
+          fontFamily: 'Kodchasan',
         ),
       ),
       inputDecorationTheme: InputDecorationTheme(
@@ -135,7 +153,7 @@ class AppTheme {
           textStyle: const TextStyle(
             fontSize: 16,
             fontWeight: FontWeight.w600,
-            fontFamily: "Poppins",
+            fontFamily: 'Kodchasan',
           ),
         ),
       ),
@@ -150,7 +168,7 @@ class AppTheme {
           textStyle: const TextStyle(
             fontSize: 16,
             fontWeight: FontWeight.w600,
-            fontFamily: "Poppins",
+            fontFamily: 'Kodchasan',
           ),
         ),
       ),
@@ -160,7 +178,7 @@ class AppTheme {
           textStyle: const TextStyle(
             fontSize: 16,
             fontWeight: FontWeight.w600,
-            fontFamily: "Poppins",
+            fontFamily: 'Kodchasan',
           ),
         ),
       ),
@@ -168,7 +186,11 @@ class AppTheme {
         backgroundColor: Colors.white,
         indicatorColor: primaryColor.withOpacity(0.2),
         labelTextStyle: MaterialStateProperty.all(
-          const TextStyle(fontSize: 12, fontWeight: FontWeight.w500),
+          const TextStyle(
+            fontSize: 12,
+            fontWeight: FontWeight.w500,
+            fontFamily: 'Kodchasan',
+          ),
         ),
         iconTheme: MaterialStateProperty.all(
           const IconThemeData(color: secondaryColor, size: 24),
@@ -203,7 +225,7 @@ class AppTheme {
         background: Color(0xFF121212),
       ),
       indicatorColor: Colors.white,
-      fontFamily: "Poppins",
+      fontFamily: 'Kodchasan',
       appBarTheme: const AppBarTheme(
         backgroundColor: Color(0xFF1E1E1E),
         elevation: 0,
@@ -212,7 +234,7 @@ class AppTheme {
           color: Colors.white,
           fontSize: 20,
           fontWeight: FontWeight.w600,
-          fontFamily: "Poppins",
+          fontFamily: 'Kodchasan',
         ),
       ),
       cardTheme: CardTheme(
@@ -229,48 +251,59 @@ class AppTheme {
           fontSize: AppDefaults.fontSizeTitleLarge,
           color: AppColors.black,
           fontWeight: FontWeight.w600,
+          fontFamily: 'Kodchasan',
         ),
         titleMedium: TextStyle(
           fontSize: AppDefaults.fontSizeTitleMedium,
           color: AppColors.black,
           fontWeight: FontWeight.w600,
+          fontFamily: 'Kodchasan',
         ),
         titleSmall: TextStyle(
           fontSize: AppDefaults.fontSizeTitleSmall,
           color: AppColors.black,
           fontWeight: FontWeight.w600,
+          fontFamily: 'Kodchasan',
         ),
         labelMedium: TextStyle(
           color: AppColors.black,
           fontSize: AppDefaults.fontSizeLabelMedium,
+          fontFamily: 'Kodchasan',
         ),
         labelLarge: TextStyle(
           color: AppColors.black,
           fontSize: AppDefaults.fontSizeSubTitle,
+          fontFamily: 'Kodchasan',
         ),
         displayLarge: TextStyle(
           color: Colors.white,
           fontWeight: FontWeight.bold,
+          fontFamily: 'Kodchasan',
         ),
         displayMedium: TextStyle(
           color: Colors.white,
           fontWeight: FontWeight.bold,
+          fontFamily: 'Kodchasan',
         ),
         displaySmall: TextStyle(
           color: Colors.white,
           fontWeight: FontWeight.w600,
+          fontFamily: 'Kodchasan',
         ),
         headlineLarge: TextStyle(
           color: Colors.white,
           fontWeight: FontWeight.w600,
+          fontFamily: 'Kodchasan',
         ),
         headlineMedium: TextStyle(
           color: Colors.white,
           fontWeight: FontWeight.w600,
+          fontFamily: 'Kodchasan',
         ),
         headlineSmall: TextStyle(
           color: Colors.white,
           fontWeight: FontWeight.w600,
+          fontFamily: 'Kodchasan',
         ),
       ),
       inputDecorationTheme: InputDecorationTheme(
@@ -311,7 +344,7 @@ class AppTheme {
           textStyle: const TextStyle(
             fontSize: 16,
             fontWeight: FontWeight.w600,
-            fontFamily: "Poppins",
+            fontFamily: 'Kodchasan',
           ),
         ),
       ),
@@ -326,7 +359,7 @@ class AppTheme {
           textStyle: const TextStyle(
             fontSize: 16,
             fontWeight: FontWeight.w600,
-            fontFamily: "Poppins",
+            fontFamily: 'Kodchasan',
           ),
         ),
       ),
@@ -336,7 +369,7 @@ class AppTheme {
           textStyle: const TextStyle(
             fontSize: 16,
             fontWeight: FontWeight.w600,
-            fontFamily: "Poppins",
+            fontFamily: 'Kodchasan',
           ),
         ),
       ),
@@ -348,6 +381,7 @@ class AppTheme {
             fontSize: 12,
             fontWeight: FontWeight.w500,
             color: Colors.white,
+            fontFamily: 'Kodchasan',
           ),
         ),
         iconTheme: MaterialStateProperty.all(

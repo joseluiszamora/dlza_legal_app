@@ -6,63 +6,54 @@ class HeaderSection extends StatelessWidget implements PreferredSizeWidget {
   const HeaderSection({super.key, required this.openDrawer});
 
   @override
+  Size get preferredSize => const Size.fromHeight(kToolbarHeight);
+
+  @override
   Widget build(BuildContext context) {
-    return Container(
-      padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 18),
-      decoration: BoxDecoration(
-        color: const Color(0xFF0bbfdf),
-        borderRadius: BorderRadius.only(
-          bottomLeft: Radius.circular(20),
-          bottomRight: Radius.circular(20),
-        ),
+    final theme = Theme.of(context);
+    final isDarkMode = theme.brightness == Brightness.dark;
+
+    return AppBar(
+      backgroundColor: theme.appBarTheme.backgroundColor,
+      elevation: theme.appBarTheme.elevation,
+      leading: IconButton(
+        icon: Icon(Icons.menu, color: isDarkMode ? Colors.white : Colors.black),
+        onPressed: openDrawer,
       ),
-      child: SafeArea(
+      title: Padding(
+        padding: const EdgeInsets.only(left: 0),
         child: Row(
+          mainAxisSize: MainAxisSize.min,
           children: [
-            IconButton(
-              icon: Icon(Icons.menu),
-              onPressed: openDrawer,
-              color: Colors.white,
-            ),
-
-            // Avatar del usuario
-            // InkWell(
-            //   onTap: openDrawer,
-            //   child: CircleAvatar(
-            //     radius: 20,
-            //     backgroundImage:
-            //         avatarUrl != null ? NetworkImage(avatarUrl!) : null,
-            //     backgroundColor: Colors.grey[300],
-            //     child: avatarUrl == null ? const Icon(Icons.person) : null,
-            //   ),
-            // ),
-            const SizedBox(width: 12),
-
-            // Información de ubicación
-            Expanded(
-              child: Column(
-                mainAxisSize: MainAxisSize.min,
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  const Text(
-                    'Bienvenido',
-                    style: TextStyle(fontSize: 12, color: Colors.white70),
-                  ),
-                ],
+            CircleAvatar(
+              radius: 16,
+              backgroundImage: NetworkImage(
+                'https://randomuser.me/api/portraits/men/7.jpg',
               ),
             ),
-
-            // Ícono de notificaciones
-            const CircleAvatar(
-              backgroundColor: Colors.white12,
-              child: Icon(Icons.notifications_outlined, color: Colors.white),
+            SizedBox(width: 6),
+            Text(
+              'Juanito Sayas',
+              style: TextStyle(
+                color: isDarkMode ? Colors.white : Colors.black,
+                fontSize: 15,
+                fontWeight: FontWeight.bold,
+              ),
             ),
           ],
         ),
       ),
+      actions: [
+        IconButton(
+          icon: Icon(
+            Icons.notifications,
+            color: isDarkMode ? Colors.white : Colors.black,
+          ),
+          onPressed: () {
+            // Acción para notificaciones
+          },
+        ),
+      ],
     );
   }
-
-  @override
-  Size get preferredSize => Size.fromHeight(kToolbarHeight + 20); // Altura ajustable del AppBar
 }
