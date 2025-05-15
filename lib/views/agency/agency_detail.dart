@@ -5,7 +5,6 @@ import 'package:dlza_legal_app/core/blocs/agency/agency_bloc.dart';
 import 'package:dlza_legal_app/core/models/agency.dart';
 import 'package:dlza_legal_app/core/components/primary_button.dart';
 import 'package:dlza_legal_app/core/components/custom_card.dart';
-import 'package:dlza_legal_app/core/components/section_header.dart';
 
 class AgencyDetail extends StatelessWidget {
   final int agencyId;
@@ -55,7 +54,8 @@ class AgencyDetail extends StatelessWidget {
                         flexibleSpace: FlexibleSpaceBar(
                           title: Text(
                             agency.name,
-                            style: const TextStyle(fontWeight: FontWeight.bold),
+                            style: Theme.of(context).textTheme.titleMedium
+                                ?.copyWith(fontWeight: FontWeight.bold),
                           ),
                           background: Container(
                             decoration: BoxDecoration(
@@ -70,14 +70,6 @@ class AgencyDetail extends StatelessWidget {
                             ),
                           ),
                         ),
-                        actions: [
-                          if (agency.latitud != null && agency.longitud != null)
-                            IconButton(
-                              icon: const Icon(Icons.map),
-                              tooltip: 'Ver en mapa',
-                              onPressed: () => _openInMap(agency),
-                            ),
-                        ],
                       ),
                       SliverToBoxAdapter(
                         child: _buildAgencyDetails(context, agency),

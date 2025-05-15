@@ -1,18 +1,18 @@
-import 'package:dlza_legal_app/core/blocs/employee/employee_bloc.dart';
-import 'package:dlza_legal_app/views/personal/components/employee_card.dart';
+import 'package:dlza_legal_app/core/blocs/agency/agency_bloc.dart';
+import 'package:dlza_legal_app/views/agency/components/agency_card.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-class EmployeeListSection extends StatelessWidget {
-  const EmployeeListSection({super.key});
+class AgencyListSection extends StatelessWidget {
+  const AgencyListSection({super.key});
 
   @override
   Widget build(BuildContext context) {
-    return BlocBuilder<EmployeeBloc, EmployeeState>(
+    return BlocBuilder<AgencyBloc, AgencyState>(
       builder: (context, state) {
-        if (state is EmployeeInitial) {
+        if (state is AgencyLoading) {
           return const Center(child: CircularProgressIndicator());
-        } else if (state is EmployeeError) {
+        } else if (state is AgencyError) {
           return Center(
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
@@ -20,11 +20,17 @@ class EmployeeListSection extends StatelessWidget {
                 const Icon(Icons.error_outline, size: 48, color: Colors.red),
                 const SizedBox(height: 16),
                 Text('Error: ${state.message}'),
+                TextButton(
+                  onPressed: () {
+                    context.read<AgencyBloc>().add(LoadAgencies());
+                  },
+                  child: const Text('Reintentar'),
+                ),
               ],
             ),
           );
-        } else if (state is EmployeeLoaded) {
-          if (state.filteredEmployees.isEmpty) {
+        } else if (state is AgencyLoaded) {
+          if (state.filteredAgencies.isEmpty) {
             return const Center(
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
@@ -32,7 +38,7 @@ class EmployeeListSection extends StatelessWidget {
                   Icon(Icons.search_off, size: 48, color: Colors.grey),
                   SizedBox(height: 16),
                   Text(
-                    'No se encontraron empleados con los filtros aplicados',
+                    'No se encontraron agencias con los filtros aplicados',
                     textAlign: TextAlign.center,
                   ),
                 ],
@@ -41,11 +47,11 @@ class EmployeeListSection extends StatelessWidget {
           }
 
           return ListView.builder(
-            padding: const EdgeInsets.all(5),
-            itemCount: state.filteredEmployees.length,
+            padding: const EdgeInsets.symmetric(vertical: 10),
+            itemCount: state.filteredAgencies.length,
             itemBuilder: (context, index) {
-              final employee = state.filteredEmployees[index];
-              return EmployeeCard(employee: employee);
+              final agency = state.filteredAgencies[index];
+              return AgencyCard(agency: agency);
             },
           );
         }

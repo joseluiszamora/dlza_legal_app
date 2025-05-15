@@ -1,3 +1,4 @@
+import 'package:dlza_legal_app/core/components/custom_card.dart';
 import 'package:dlza_legal_app/core/models/agency.dart';
 import 'package:dlza_legal_app/views/agency/agency_detail.dart';
 import 'package:flutter/material.dart';
@@ -9,100 +10,172 @@ class AgencyCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Card(
-      elevation: 2,
-      margin: const EdgeInsets.only(bottom: 16.0),
-      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12.0)),
-      child: InkWell(
-        onTap: () {
-          Navigator.push(
-            context,
-            MaterialPageRoute(
-              builder: (context) => AgencyDetail(agencyId: agency.id),
-            ),
-          );
-        },
-        borderRadius: BorderRadius.circular(12.0),
-        child: Padding(
-          padding: const EdgeInsets.all(16.0),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
+    final theme = Theme.of(context);
+
+    return CustomCard(
+      onTap: () {
+        Navigator.push(
+          context,
+          MaterialPageRoute(
+            builder: (context) => AgencyDetail(agencyId: agency.id),
+          ),
+        );
+      },
+      padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 15),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          // Nombre de la agencia con badge de ciudad
+          Row(
             children: [
-              Text(
-                agency.name,
-                style: const TextStyle(
-                  fontSize: 18.0,
-                  fontWeight: FontWeight.bold,
+              Expanded(
+                child: Text(
+                  agency.name,
+                  style: theme.textTheme.titleMedium?.copyWith(
+                    fontWeight: FontWeight.bold,
+                    color: theme.colorScheme.secondary,
+                  ),
                 ),
               ),
-              const SizedBox(height: 8.0),
-              _buildInfoRow(
-                icon: Icons.person,
-                text: 'Agente: ${agency.agent}',
-              ),
-              _buildInfoRow(
-                icon: Icons.location_city,
-                text: 'Ciudad: ${agency.city}',
-              ),
-              const Divider(),
-              Row(
-                children: [
-                  Expanded(
-                    child: _buildInfoRow(
-                      icon: Icons.local_atm,
-                      text: 'Garantía: ${agency.formattedMontoGarantia}',
-                    ),
+              Container(
+                padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
+                decoration: BoxDecoration(
+                  color: theme.colorScheme.primary.withOpacity(0.1),
+                  borderRadius: BorderRadius.circular(12),
+                ),
+                child: Text(
+                  agency.city,
+                  style: TextStyle(
+                    fontSize: 12,
+                    color: theme.colorScheme.primary,
+                    fontWeight: FontWeight.w500,
                   ),
-                  Expanded(
-                    child: _buildInfoRow(
-                      icon: Icons.security,
-                      text: 'Tipo: ${agency.tipoGarantia}',
-                    ),
-                  ),
-                ],
-              ),
-              const Divider(),
-              Row(
-                children: [
-                  Expanded(
-                    child: _buildInfoRow(
-                      icon: Icons.calendar_today,
-                      text: 'Fin de contrato: ${agency.contratoFinFormatted}',
-                    ),
-                  ),
-                  Expanded(
-                    flex: 1,
-                    child: _buildRemainingTime(agency.remainingTime),
-                  ),
-                ],
+                ),
               ),
             ],
           ),
-        ),
-      ),
-    );
-  }
 
-  Widget _buildInfoRow({required IconData icon, required String text}) {
-    return Padding(
-      padding: const EdgeInsets.symmetric(vertical: 4.0),
-      child: Row(
-        children: [
-          Icon(icon, size: 16, color: Colors.black54),
-          const SizedBox(width: 8.0),
-          Expanded(
-            child: Text(
-              text,
-              style: const TextStyle(fontSize: 14.0),
-              overflow: TextOverflow.ellipsis,
-            ),
+          const SizedBox(height: 12),
+
+          // Información del agente
+          Row(
+            children: [
+              Icon(
+                Icons.person,
+                size: 16,
+                color:
+                    theme.brightness == Brightness.light
+                        ? Colors.black54
+                        : Colors.white70,
+              ),
+              const SizedBox(width: 8),
+              Expanded(
+                child: Text(
+                  'Agente: ${agency.agent}',
+                  style: theme.textTheme.bodyMedium,
+                  overflow: TextOverflow.ellipsis,
+                  maxLines: 2,
+                ),
+              ),
+            ],
+          ),
+
+          Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 5),
+            child: const Divider(height: 24, color: Colors.black26),
+          ),
+
+          // Información de garantía
+          Row(
+            children: [
+              Expanded(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      'Tipo de Garantía',
+                      style: theme.textTheme.bodySmall?.copyWith(
+                        color:
+                            theme.brightness == Brightness.light
+                                ? Colors.black54
+                                : Colors.white70,
+                      ),
+                    ),
+                    const SizedBox(height: 4),
+                    Text(
+                      agency.tipoGarantia,
+                      style: theme.textTheme.bodyMedium?.copyWith(
+                        fontWeight: FontWeight.w500,
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+              Expanded(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      'Monto de Garantía',
+                      style: theme.textTheme.bodySmall?.copyWith(
+                        color:
+                            theme.brightness == Brightness.light
+                                ? Colors.black54
+                                : Colors.white70,
+                      ),
+                    ),
+                    const SizedBox(height: 4),
+                    Text(
+                      agency.formattedMontoGarantia,
+                      style: theme.textTheme.bodyMedium?.copyWith(
+                        fontWeight: FontWeight.w500,
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+            ],
+          ),
+
+          const SizedBox(height: 16),
+
+          // Información del contrato
+          Row(
+            children: [
+              Expanded(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      'Fin de Contrato',
+                      style: theme.textTheme.bodySmall?.copyWith(
+                        color:
+                            theme.brightness == Brightness.light
+                                ? Colors.black54
+                                : Colors.white70,
+                      ),
+                    ),
+                    const SizedBox(height: 4),
+                    Text(
+                      agency.contratoFinFormatted,
+                      style: theme.textTheme.bodyMedium?.copyWith(
+                        fontWeight: FontWeight.w500,
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+              Expanded(
+                child: _buildRemainingTime(context, agency.remainingTime),
+              ),
+            ],
           ),
         ],
       ),
     );
   }
 
-  Widget _buildRemainingTime(String remainingTime) {
+  Widget _buildRemainingTime(BuildContext context, String remainingTime) {
     Color color;
     IconData icon;
 
@@ -118,20 +191,23 @@ class AgencyCard extends StatelessWidget {
     }
 
     return Container(
-      padding: const EdgeInsets.symmetric(horizontal: 8.0, vertical: 4.0),
+      padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 6),
       decoration: BoxDecoration(
         color: color.withOpacity(0.1),
-        borderRadius: BorderRadius.circular(4.0),
+        borderRadius: BorderRadius.circular(8),
       ),
       child: Row(
-        mainAxisSize: MainAxisSize.min,
         children: [
           Icon(icon, size: 16, color: color),
-          const SizedBox(width: 4.0),
+          const SizedBox(width: 6),
           Expanded(
             child: Text(
               remainingTime,
-              style: TextStyle(fontSize: 12.0, color: color),
+              style: TextStyle(
+                fontSize: 12,
+                fontWeight: FontWeight.w500,
+                color: color,
+              ),
               overflow: TextOverflow.ellipsis,
             ),
           ),

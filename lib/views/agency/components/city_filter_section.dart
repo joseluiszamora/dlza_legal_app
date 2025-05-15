@@ -1,4 +1,5 @@
 import 'package:dlza_legal_app/core/blocs/agency/agency_bloc.dart';
+import 'package:dlza_legal_app/core/components/filter_chip_item.dart';
 import 'package:dlza_legal_app/core/models/agency.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -21,10 +22,9 @@ class CityFilterSection extends StatelessWidget {
           padding: const EdgeInsets.symmetric(horizontal: 16.0),
           child: Row(
             children: [
-              _buildFilterChip(
-                context: context,
+              FilterChipItem(
                 label: 'Todas',
-                selected: loadedState.selectedCity == null,
+                isSelected: loadedState.selectedCity == null,
                 onSelected: (_) {
                   context.read<AgencyBloc>().add(ClearCityFilter());
                 },
@@ -34,10 +34,9 @@ class CityFilterSection extends StatelessWidget {
               ...availableCities.map((city) {
                 return Padding(
                   padding: const EdgeInsets.only(right: 8.0),
-                  child: _buildFilterChip(
-                    context: context,
+                  child: FilterChipItem(
                     label: city,
-                    selected: loadedState.selectedCity == city,
+                    isSelected: loadedState.selectedCity == city,
                     onSelected: (_) {
                       context.read<AgencyBloc>().add(
                         FilterAgenciesByCity(city),
@@ -50,22 +49,6 @@ class CityFilterSection extends StatelessWidget {
           ),
         );
       },
-    );
-  }
-
-  Widget _buildFilterChip({
-    required BuildContext context,
-    required String label,
-    required bool selected,
-    required Function(bool) onSelected,
-  }) {
-    return FilterChip(
-      label: Text(label),
-      selected: selected,
-      onSelected: onSelected,
-      backgroundColor: Colors.grey[200],
-      selectedColor: Theme.of(context).primaryColor.withOpacity(0.3),
-      checkmarkColor: Theme.of(context).primaryColor,
     );
   }
 }
