@@ -31,9 +31,12 @@ class _NavigationBarPageState extends State<NavigationBarPage> {
       const AgencyPage(),
     ];
 
+    List<String> titles = ['Directorio de Personal', 'Inicio', 'Contratos'];
+
     return Scaffold(
       key: _scaffoldKey,
       appBar: HeaderSection(
+        title: titles[_pageSelected],
         openDrawer: () => _scaffoldKey.currentState?.openDrawer(),
       ),
       drawer: _buildDrawer(context),

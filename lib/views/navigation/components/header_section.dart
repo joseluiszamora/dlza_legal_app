@@ -2,8 +2,13 @@ import 'package:flutter/material.dart';
 
 class HeaderSection extends StatelessWidget implements PreferredSizeWidget {
   final VoidCallback openDrawer;
+  final String title;
 
-  const HeaderSection({super.key, required this.openDrawer});
+  const HeaderSection({
+    super.key,
+    required this.openDrawer,
+    required this.title,
+  });
 
   @override
   Size get preferredSize => const Size.fromHeight(kToolbarHeight);
@@ -25,18 +30,11 @@ class HeaderSection extends StatelessWidget implements PreferredSizeWidget {
         child: Row(
           mainAxisSize: MainAxisSize.min,
           children: [
-            CircleAvatar(
-              radius: 16,
-              backgroundImage: NetworkImage(
-                'https://randomuser.me/api/portraits/men/7.jpg',
-              ),
-            ),
-            SizedBox(width: 6),
             Text(
-              'Juanito Sayas',
+              title,
               style: TextStyle(
                 color: isDarkMode ? Colors.white : Colors.black,
-                fontSize: 15,
+                fontSize: 18,
                 fontWeight: FontWeight.bold,
               ),
             ),
@@ -44,6 +42,12 @@ class HeaderSection extends StatelessWidget implements PreferredSizeWidget {
         ),
       ),
       actions: [
+        CircleAvatar(
+          radius: 16,
+          backgroundImage: NetworkImage(
+            'https://randomuser.me/api/portraits/men/7.jpg',
+          ),
+        ),
         IconButton(
           icon: Icon(
             Icons.notifications,

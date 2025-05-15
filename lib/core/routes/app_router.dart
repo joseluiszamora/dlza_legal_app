@@ -18,10 +18,12 @@ List<RouteBase> publicRoutes() => [
   ),
   GoRoute(
     path: AppRoutes.navigation,
+    name: 'Inicio',
     builder: (context, state) => const NavigationBarPage(),
   ),
   GoRoute(
     path: AppRoutes.authLogin,
+    name: 'Login',
     builder: (context, state) => const LoginPage(),
   ),
 ];
