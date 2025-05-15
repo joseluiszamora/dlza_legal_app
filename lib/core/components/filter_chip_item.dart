@@ -31,6 +31,7 @@ class FilterChipItem extends StatelessWidget {
                   ? Colors.black87
                   : Colors.white70,
           fontWeight: isSelected ? FontWeight.w600 : FontWeight.normal,
+          fontFamily: 'Kodchasan',
         ),
       ),
       selected: isSelected,
