@@ -9,16 +9,16 @@ class AppColors {
   //* Scaffold Background
   static const Color scaffoldBackground = Color(0xFFF0F0F0);
   // static const Color scaffoldBackgroundDark = Color(0xFF1c0e4a);
-  static const Color scaffoldBackgroundDark = Color(0xFF0f4251);
+  static const Color scaffoldBackgroundDark = Color.fromARGB(255, 30, 62, 71);
 
   //* Navigation Bar
   static const Color navigationBarLight = Color(0xFFFFFFFF);
-  static const Color navigationBarDark = Color(0xFF338b85);
+  static const Color navigationBarDark = Color(0xFF676475);
   static const Color navigationOptionLight = secondary;
   static const Color navigationOptionDark = Color(0xFFFFFFFF);
 
   //* Cards
-  static const Color cardColorLight = Color(0xFFFFFFFF);
+  static const Color cardColorLight = Color.fromARGB(255, 63, 48, 48);
   static const Color cardColorDark = Color(0xFF0f4251);
 
   static const Color white = Colors.white;

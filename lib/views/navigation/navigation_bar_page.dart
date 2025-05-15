@@ -24,6 +24,8 @@ class _NavigationBarPageState extends State<NavigationBarPage> {
 
   @override
   Widget build(BuildContext context) {
+    final theme = Theme.of(context);
+
     //* Pages List
     List<Widget> pages = [
       const PersonalPage(),
@@ -46,7 +48,11 @@ class _NavigationBarPageState extends State<NavigationBarPage> {
       ),
       bottomNavigationBar: Container(
         decoration: BoxDecoration(
-          color: Colors.white,
+          color:
+              theme.brightness == Brightness.light
+                  ? AppColors.navigationBarLight
+                  : AppColors.navigationBarDark,
+          // color: Colors.red,
           borderRadius: BorderRadius.circular(AppDefaults.margin),
           boxShadow: [
             BoxShadow(blurRadius: 20, color: Colors.black.withAlpha(1)),
@@ -65,7 +71,10 @@ class _NavigationBarPageState extends State<NavigationBarPage> {
               padding: EdgeInsets.symmetric(horizontal: 20, vertical: 12),
               duration: Duration(milliseconds: 400),
               tabBackgroundColor: Colors.grey[100]!,
-              color: Colors.black,
+              color:
+                  theme.brightness == Brightness.light
+                      ? AppColors.primary
+                      : Colors.white,
               tabs: [
                 GButton(icon: LineIcons.userCircle, text: 'Personas'),
                 GButton(icon: LineIcons.home, text: 'Inicio'),
