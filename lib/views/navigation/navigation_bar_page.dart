@@ -31,7 +31,7 @@ class _NavigationBarPageState extends State<NavigationBarPage> {
       const AgencyPage(),
     ];
 
-    List<String> titles = ['Directorio de Personal', 'Inicio', 'Contratos'];
+    List<String> titles = ['Directorio de Personal', 'Inicio', 'Agencias'];
 
     return Scaffold(
       key: _scaffoldKey,
@@ -69,7 +69,7 @@ class _NavigationBarPageState extends State<NavigationBarPage> {
               tabs: [
                 GButton(icon: LineIcons.userCircle, text: 'Personas'),
                 GButton(icon: LineIcons.home, text: 'Inicio'),
-                GButton(icon: LineIcons.fileContract, text: 'Contractos'),
+                GButton(icon: LineIcons.fileContract, text: 'Agencias'),
               ],
               selectedIndex: _pageSelected,
               onTabChange: (index) {
@@ -148,11 +148,13 @@ class _NavigationBarPageState extends State<NavigationBarPage> {
         children: [
           CircleAvatar(
             radius: 30,
-            backgroundImage: NetworkImage('https://example.com/profile.jpg'),
+            backgroundImage: NetworkImage(
+              'https://randomuser.me/api/portraits/men/7.jpg',
+            ),
           ),
           SizedBox(height: 10),
           Text(
-            'Nombre del Usuario',
+            'Juan Solo',
             style: TextStyle(
               color: Colors.white,
               fontSize: 18,

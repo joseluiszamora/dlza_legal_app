@@ -31,6 +31,7 @@ class MyApp extends StatelessWidget {
       builder: (context, themeProvider, child) {
         return MaterialApp.router(
           title: 'DLZA Legal App',
+          debugShowCheckedModeBanner: false,
           theme:
               themeProvider.isDarkMode
                   ? AppTheme.darkTheme(context)

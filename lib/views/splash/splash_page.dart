@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'package:dlza_legal_app/core/constants/app_colors.dart';
 import 'package:dlza_legal_app/core/routes/app_routes.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
@@ -48,17 +49,21 @@ class _SplashPageState extends State<SplashPage> {
                   (context, error, stackTrace) => const Icon(
                     Icons.icecream,
                     size: 150,
-                    color: Colors.white,
+                    color: AppColors.primary,
                   ),
             ),
             const SizedBox(height: 30),
-            const Text(
+            Text(
               'Dlza Legal',
-              style: TextStyle(
+              style: Theme.of(context).textTheme.titleLarge?.copyWith(
                 fontSize: 32,
                 fontWeight: FontWeight.bold,
-                color: Colors.white,
               ),
+              // style: TextStyle(
+              //   fontSize: 32,
+              //   fontWeight: FontWeight.bold,
+              //   color: Colors.white,
+              // ),
             ),
             const SizedBox(height: 50),
             const CircularProgressIndicator(color: Colors.white),
