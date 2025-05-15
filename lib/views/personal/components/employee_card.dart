@@ -2,6 +2,7 @@ import 'package:dlza_legal_app/core/components/contact_action_button.dart';
 import 'package:dlza_legal_app/core/components/custom_card.dart';
 import 'package:dlza_legal_app/core/models/employee.dart';
 import 'package:flutter/material.dart';
+import 'package:line_icons/line_icons.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 class EmployeeCard extends StatelessWidget {
@@ -135,7 +136,7 @@ class EmployeeCard extends StatelessWidget {
                 onPressed: () => _makePhoneCall(employee.phone),
               ),
               ContactActionButton(
-                icon: Icons.chat_bubble,
+                icon: LineIcons.whatSApp,
                 label: 'WhatsApp',
                 color: Colors.green,
                 onPressed: () => _openWhatsApp(employee.phone),

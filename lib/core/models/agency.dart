@@ -18,6 +18,9 @@ class Agency {
   final bool ruat;
   final double? latitud;
   final double? longitud;
+  final String testimonioNotarial;
+  final DateTime? vigenciaLicenciaFuncionamiento;
+  final String observaciones;
 
   Agency({
     required this.id,
@@ -37,6 +40,9 @@ class Agency {
     required this.ruat,
     this.latitud,
     this.longitud,
+    required this.testimonioNotarial,
+    this.vigenciaLicenciaFuncionamiento,
+    required this.observaciones,
   });
 
   factory Agency.fromJson(Map<String, dynamic> json) {
@@ -65,6 +71,13 @@ class Agency {
       ruat: json['ruat'] as bool? ?? false,
       latitud: (json['latitud'] as num?)?.toDouble(),
       longitud: (json['longitud'] as num?)?.toDouble(),
+      testimonioNotarial:
+          json['testimonioNotarial'] as String? ?? 'No registrado',
+      vigenciaLicenciaFuncionamiento:
+          json['vigenciaLicenciaFuncionamiento'] != null
+              ? DateTime.parse(json['vigenciaLicenciaFuncionamiento'] as String)
+              : null,
+      observaciones: json['observaciones'] as String? ?? 'Sin observaciones',
     );
   }
 
@@ -85,6 +98,12 @@ class Agency {
         : 'Sin fecha';
   }
 
+  String get vigenciaLicenciaFuncionamientoFormatted {
+    return vigenciaLicenciaFuncionamiento != null
+        ? DateFormat('dd/MM/yyyy').format(vigenciaLicenciaFuncionamiento!)
+        : 'Sin fecha';
+  }
+
   String get remainingTime {
     if (contratoAgenciaFin == null) return 'Sin fecha de finalización';
 
@@ -93,6 +112,26 @@ class Agency {
 
     if (difference.isNegative) {
       return 'Contrato vencido';
+    }
+
+    if (difference.inDays > 30) {
+      int months = (difference.inDays / 30).floor();
+      return '$months ${months == 1 ? 'mes' : 'meses'} restantes';
+    } else {
+      return '${difference.inDays} ${difference.inDays == 1 ? 'día' : 'días'} restantes';
+    }
+  }
+
+  String get remainingTimeLicenciaFuncionamiento {
+    if (vigenciaLicenciaFuncionamiento == null) {
+      return 'Sin fecha';
+    }
+
+    final now = DateTime.now();
+    final difference = vigenciaLicenciaFuncionamiento!.difference(now);
+
+    if (difference.isNegative) {
+      return 'Licencia vencida';
     }
 
     if (difference.inDays > 30) {

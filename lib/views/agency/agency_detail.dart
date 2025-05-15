@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:line_icons/line_icons.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'package:dlza_legal_app/core/blocs/agency/agency_bloc.dart';
 import 'package:dlza_legal_app/core/models/agency.dart';
@@ -48,6 +49,7 @@ class AgencyDetail extends StatelessWidget {
                   final agency = state.agency;
                   return CustomScrollView(
                     slivers: [
+                      // Header con el nombre de la agencia
                       SliverAppBar(
                         expandedHeight: 120,
                         pinned: true,
@@ -156,6 +158,12 @@ class AgencyDetail extends StatelessWidget {
           _buildInfoSection(context, 'Información del Contrato', [
             _buildInfoItem(
               context,
+              'Testimonio Notarial',
+              agency.testimonioNotarial,
+              LineIcons.fileContract,
+            ),
+            _buildInfoItem(
+              context,
               'Tipo de Garantía',
               agency.tipoGarantia,
               Icons.security,
@@ -176,7 +184,7 @@ class AgencyDetail extends StatelessWidget {
             Row(
               children: [
                 Expanded(
-                  flex: 2,
+                  flex: 3,
                   child: _buildInfoItem(
                     context,
                     'Fin de Contrato',
@@ -185,12 +193,58 @@ class AgencyDetail extends StatelessWidget {
                   ),
                 ),
                 Expanded(
-                  flex: 3,
+                  flex: 2,
                   child: _buildRemainingTimeItem(context, agency.remainingTime),
                 ),
               ],
             ),
           ]),
+
+          const SizedBox(height: 20),
+
+          _buildInfoSection(context, 'Información del Local', [
+            Row(
+              children: [
+                Expanded(
+                  flex: 3,
+                  child: _buildInfoItem(
+                    context,
+                    'Validez de la Licencia de Funcionamiento',
+                    agency.vigenciaLicenciaFuncionamientoFormatted,
+                    LineIcons.fileContract,
+                  ),
+                ),
+                agency.vigenciaLicenciaFuncionamientoFormatted != 'Sin fecha'
+                    ? Expanded(
+                      flex: 2,
+                      child: _buildRemainingTimeItem(
+                        context,
+                        agency.remainingTimeLicenciaFuncionamiento,
+                      ),
+                    )
+                    : SizedBox.shrink(),
+              ],
+            ),
+            _buildInfoItem(
+              context,
+              'Contrato de Alquiler',
+              'Sin Contrato',
+              LineIcons.fileContract,
+            ),
+          ]),
+          const SizedBox(height: 20),
+
+          agency.observaciones != 'Sin observaciones'
+              ? _buildInfoSection(context, 'Observaciones', [
+                Text(
+                  agency.observaciones,
+                  style: const TextStyle(
+                    fontSize: 16,
+                    fontWeight: FontWeight.w500,
+                  ),
+                ),
+              ])
+              : SizedBox.shrink(),
 
           const SizedBox(height: 20),
 
