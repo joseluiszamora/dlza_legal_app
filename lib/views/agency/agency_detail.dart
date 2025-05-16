@@ -57,7 +57,7 @@ class AgencyDetail extends StatelessWidget {
                           title: Text(
                             agency.name,
                             style: Theme.of(context).textTheme.titleMedium
-                                ?.copyWith(fontWeight: FontWeight.bold),
+                                ?.copyWith(color: Colors.white),
                           ),
                           background: Container(
                             decoration: BoxDecoration(
@@ -198,10 +198,45 @@ class AgencyDetail extends StatelessWidget {
                 ),
               ],
             ),
+            // Botón para descargar el contrato en PDF
+            Padding(
+              padding: const EdgeInsets.only(top: 16.0),
+              child: ElevatedButton.icon(
+                onPressed: () => _downloadContractPdf(),
+                icon: Icon(
+                  LineIcons.pdfFile,
+                  color:
+                      theme.brightness == Brightness.light
+                          ? Colors.white
+                          : Colors.black87,
+                ),
+                label: Text(
+                  'Descargar Contrato',
+                  style: TextStyle(
+                    color:
+                        theme.brightness == Brightness.light
+                            ? Colors.white
+                            : Colors.black87,
+                  ),
+                ),
+                style: ElevatedButton.styleFrom(
+                  backgroundColor: Colors.red[300],
+                  foregroundColor: Colors.white,
+                  padding: const EdgeInsets.symmetric(
+                    horizontal: 16,
+                    vertical: 12,
+                  ),
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(8),
+                  ),
+                ),
+              ),
+            ),
           ]),
 
           const SizedBox(height: 20),
 
+          // Información del Local
           _buildInfoSection(context, 'Información del Local', [
             Row(
               children: [
@@ -336,7 +371,8 @@ class AgencyDetail extends StatelessWidget {
     Color color;
     IconData icon;
 
-    if (remainingTime.contains('vencido')) {
+    if (remainingTime.contains('vencido') ||
+        remainingTime.contains('vencida')) {
       color = Colors.red;
       icon = Icons.warning;
     } else if (remainingTime.contains('días')) {
@@ -481,6 +517,22 @@ class AgencyDetail extends StatelessWidget {
       await launchUrl(uri, mode: LaunchMode.externalApplication);
     } else {
       throw 'No se pudo abrir el mapa';
+    }
+  }
+
+  Future<void> _downloadContractPdf() async {
+    const String pdfUrl =
+        'https://www.w3.org/WAI/ER/tests/xhtml/testfiles/resources/pdf/dummy.pdf';
+    final Uri uri = Uri.parse(pdfUrl);
+
+    try {
+      if (await canLaunchUrl(uri)) {
+        await launchUrl(uri, mode: LaunchMode.externalApplication);
+      } else {
+        throw 'No se pudo abrir el documento: $pdfUrl';
+      }
+    } catch (e) {
+      print('Error al abrir el PDF: $e');
     }
   }
 }
