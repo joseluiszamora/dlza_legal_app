@@ -36,21 +36,24 @@ class EmployeeCard extends StatelessWidget {
                     ),
                   ],
                 ),
-                child: ClipRRect(
-                  borderRadius: BorderRadius.circular(16),
-                  child: Image.network(
-                    employee.image,
-                    fit: BoxFit.cover,
-                    errorBuilder: (context, error, stackTrace) {
-                      return Container(
-                        color: theme.colorScheme.primary.withOpacity(0.1),
-                        child: Icon(
-                          Icons.person,
-                          size: 40,
-                          color: theme.colorScheme.primary,
-                        ),
-                      );
-                    },
+                child: Hero(
+                  tag: 'employee-${employee.id}',
+                  child: ClipRRect(
+                    borderRadius: BorderRadius.circular(16),
+                    child: Image.network(
+                      employee.image,
+                      fit: BoxFit.cover,
+                      errorBuilder: (context, error, stackTrace) {
+                        return Container(
+                          color: theme.colorScheme.primary.withOpacity(0.1),
+                          child: Icon(
+                            Icons.person,
+                            size: 40,
+                            color: theme.colorScheme.primary,
+                          ),
+                        );
+                      },
+                    ),
                   ),
                 ),
               ),

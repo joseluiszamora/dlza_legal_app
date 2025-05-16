@@ -9,6 +9,11 @@ class Employee {
   final String phone;
   final String address;
   final String image;
+  final String document;
+  final DateTime birthDate;
+  final DateTime admissionDate;
+  final double salary;
+  final double vacationDaysAvailable;
 
   Employee({
     required this.id,
@@ -21,6 +26,11 @@ class Employee {
     required this.phone,
     required this.address,
     required this.image,
+    required this.document,
+    required this.birthDate,
+    required this.admissionDate,
+    required this.salary,
+    required this.vacationDaysAvailable,
   });
 }
 
@@ -48,6 +58,11 @@ final List<Employee> employees = [
     phone: '123456789',
     address: 'Calle Falsa 123',
     image: 'https://randomuser.me/api/portraits/men/1.jpg',
+    document: '1234567',
+    birthDate: DateTime(1980, 5, 15),
+    admissionDate: DateTime(2015, 3, 1),
+    salary: 15000.0,
+    vacationDaysAvailable: 15.0,
   ),
   Employee(
     id: 2,
@@ -60,6 +75,11 @@ final List<Employee> employees = [
     phone: '987654321',
     address: 'Avenida Siempre Viva 456',
     image: 'https://randomuser.me/api/portraits/women/2.jpg',
+    document: '2345678',
+    birthDate: DateTime(1985, 7, 22),
+    admissionDate: DateTime(2017, 6, 15),
+    salary: 9000.0,
+    vacationDaysAvailable: 10.0,
   ),
   Employee(
     id: 3,
@@ -72,6 +92,11 @@ final List<Employee> employees = [
     phone: '456789123',
     address: 'Calle Falsa 789',
     image: 'https://randomuser.me/api/portraits/men/3.jpg',
+    document: '3456789',
+    birthDate: DateTime(1982, 3, 10),
+    admissionDate: DateTime(2016, 4, 1),
+    salary: 10000.0,
+    vacationDaysAvailable: 12.0,
   ),
   Employee(
     id: 4,
@@ -84,6 +109,11 @@ final List<Employee> employees = [
     phone: '321654987',
     address: 'Avenida Siempre Viva 123',
     image: 'https://randomuser.me/api/portraits/women/4.jpg',
+    document: '4567890',
+    birthDate: DateTime(1988, 9, 5),
+    admissionDate: DateTime(2018, 2, 15),
+    salary: 8500.0,
+    vacationDaysAvailable: 8.0,
   ),
   Employee(
     id: 5,
@@ -96,6 +126,11 @@ final List<Employee> employees = [
     phone: '654321789',
     address: 'Calle Falsa 456',
     image: 'https://randomuser.me/api/portraits/men/5.jpg',
+    document: '5678901',
+    birthDate: DateTime(1990, 11, 15),
+    admissionDate: DateTime(2019, 8, 1),
+    salary: 12000.0,
+    vacationDaysAvailable: 10.0,
   ),
   Employee(
     id: 6,
@@ -108,6 +143,11 @@ final List<Employee> employees = [
     phone: '789123456',
     address: 'Avenida Siempre Viva 789',
     image: 'https://randomuser.me/api/portraits/women/6.jpg',
+    document: '6789012',
+    birthDate: DateTime(1987, 6, 28),
+    admissionDate: DateTime(2017, 9, 1),
+    salary: 9500.0,
+    vacationDaysAvailable: 12.0,
   ),
   Employee(
     id: 7,
@@ -120,6 +160,11 @@ final List<Employee> employees = [
     phone: '159753486',
     address: 'Calle Falsa 321',
     image: 'https://randomuser.me/api/portraits/men/7.jpg',
+    document: '7890123',
+    birthDate: DateTime(1983, 2, 14),
+    admissionDate: DateTime(2015, 11, 15),
+    salary: 7500.0,
+    vacationDaysAvailable: 15.0,
   ),
   Employee(
     id: 8,
@@ -132,6 +177,11 @@ final List<Employee> employees = [
     phone: '753159486',
     address: 'Avenida Siempre Viva 321',
     image: 'https://randomuser.me/api/portraits/women/8.jpg',
+    document: '8901234',
+    birthDate: DateTime(1986, 4, 22),
+    admissionDate: DateTime(2018, 5, 1),
+    salary: 8800.0,
+    vacationDaysAvailable: 10.0,
   ),
   Employee(
     id: 9,
@@ -144,6 +194,11 @@ final List<Employee> employees = [
     phone: '951753486',
     address: 'Calle Falsa 654',
     image: 'https://randomuser.me/api/portraits/men/9.jpg',
+    document: '9012345',
+    birthDate: DateTime(1979, 8, 30),
+    admissionDate: DateTime(2014, 7, 1),
+    salary: 7000.0,
+    vacationDaysAvailable: 20.0,
   ),
   Employee(
     id: 10,
@@ -156,5 +211,10 @@ final List<Employee> employees = [
     phone: '852963741',
     address: 'Avenida Siempre Viva 654',
     image: 'https://randomuser.me/api/portraits/women/10.jpg',
+    document: '0123456',
+    birthDate: DateTime(1992, 12, 5),
+    admissionDate: DateTime(2020, 1, 15),
+    salary: 2500.0,
+    vacationDaysAvailable: 5.0,
   ),
 ];

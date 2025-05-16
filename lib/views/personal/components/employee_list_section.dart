@@ -1,5 +1,6 @@
 import 'package:dlza_legal_app/core/blocs/employee/employee_bloc.dart';
 import 'package:dlza_legal_app/views/personal/components/employee_card.dart';
+import 'package:dlza_legal_app/views/personal/employee_detail_page.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -45,7 +46,18 @@ class EmployeeListSection extends StatelessWidget {
             itemCount: state.filteredEmployees.length,
             itemBuilder: (context, index) {
               final employee = state.filteredEmployees[index];
-              return EmployeeCard(employee: employee);
+              return InkWell(
+                onTap: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder:
+                          (context) => EmployeeDetailPage(employee: employee),
+                    ),
+                  );
+                },
+                child: EmployeeCard(employee: employee),
+              );
             },
           );
         }
