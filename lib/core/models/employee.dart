@@ -1,37 +1,128 @@
 class Employee {
   final int id;
-  final String name;
-  final String lastName;
-  final String area;
-  final String department;
-  final String position;
-  final String email;
-  final String phone;
-  final String address;
-  final String image;
-  final String document;
-  final DateTime birthDate;
-  final DateTime admissionDate;
-  final double salary;
-  final double vacationDaysAvailable;
+  final String nombres;
+  final String apellidos;
+  final String documento;
+  final String tipoDocumento;
+  final DateTime fechaNacimiento;
+  final String? genero;
+  final String? codigoSap;
+  final DateTime fechaIngreso;
+  final bool activo;
+  final String? telefono;
+  final String? email;
+  final String? direccion;
+  final String? imagenUrl;
+  final int salario;
+  final int vacacionesDisponibles;
+  final String cargo;
+  final int areaId;
+  final int ciudadId;
+  final DateTime createdAt;
+
+  // Datos de relaciones
+  final String? areaNombre;
+  final String? areaDepartamento;
+  final String? ciudadNombre;
+  final String? ciudadPais;
 
   Employee({
     required this.id,
-    required this.name,
-    required this.lastName,
-    required this.area,
-    required this.department,
-    required this.position,
-    required this.email,
-    required this.phone,
-    required this.address,
-    required this.image,
-    required this.document,
-    required this.birthDate,
-    required this.admissionDate,
-    required this.salary,
-    required this.vacationDaysAvailable,
+    required this.nombres,
+    required this.apellidos,
+    required this.documento,
+    required this.tipoDocumento,
+    required this.fechaNacimiento,
+    this.genero,
+    this.codigoSap,
+    required this.fechaIngreso,
+    required this.activo,
+    this.telefono,
+    this.email,
+    this.direccion,
+    this.imagenUrl,
+    required this.salario,
+    required this.vacacionesDisponibles,
+    required this.cargo,
+    required this.areaId,
+    required this.ciudadId,
+    required this.createdAt,
+    this.areaNombre,
+    this.areaDepartamento,
+    this.ciudadNombre,
+    this.ciudadPais,
   });
+
+  factory Employee.fromJson(Map<String, dynamic> json) {
+    return Employee(
+      id: json['id'],
+      nombres: json['nombres'],
+      apellidos: json['apellidos'],
+      documento: json['documento'],
+      tipoDocumento: json['tipoDocumento'] ?? 'CI',
+      fechaNacimiento: DateTime.parse(json['fechaNacimiento']),
+      genero: json['genero'],
+      codigoSap: json['codigoSap'],
+      fechaIngreso: DateTime.parse(json['fechaIngreso']),
+      activo: json['activo'] ?? true,
+      telefono: json['telefono'],
+      email: json['email'],
+      direccion: json['direccion'],
+      imagenUrl: json['imagenUrl'],
+      salario: json['salario'] ?? 0,
+      vacacionesDisponibles: json['vacacionesDisponibles'] ?? 0,
+      cargo: json['cargo'],
+      areaId: json['areaId'],
+      ciudadId: json['ciudadId'],
+      createdAt: DateTime.parse(json['createdAt']),
+      // Datos de relaciones anidadas
+      areaNombre: json['area']?['nombre'],
+      areaDepartamento: json['area']?['departamento'],
+      ciudadNombre: json['ciudad']?['nombre'],
+      ciudadPais: json['ciudad']?['pais'],
+    );
+  }
+
+  // Getters para compatibilidad con el código existente
+  String get name => nombres;
+  String get lastName => apellidos;
+  String get position => cargo;
+  String get area => areaNombre ?? '';
+  String get department => areaDepartamento ?? '';
+  String get phone => telefono ?? '';
+  String get address => direccion ?? '';
+  String get image =>
+      imagenUrl ?? 'https://randomuser.me/api/portraits/men/1.jpg';
+  DateTime get birthDate => fechaNacimiento;
+  DateTime get admissionDate => fechaIngreso;
+  double get salary => salario.toDouble();
+  double get vacationDaysAvailable => vacacionesDisponibles.toDouble();
+}
+
+// Modelo para Area
+class Area {
+  final int id;
+  final String nombre;
+  final String? departamento;
+  final DateTime createdAt;
+
+  Area({
+    required this.id,
+    required this.nombre,
+    this.departamento,
+    required this.createdAt,
+  });
+
+  factory Area.fromJson(Map<String, dynamic> json) {
+    return Area(
+      id: json['id'],
+      nombre: json['nombre'],
+      departamento: json['departamento'],
+      createdAt: DateTime.parse(json['createdAt']),
+    );
+  }
+
+  String get name => nombre;
 }
 
 enum Department {
@@ -46,6 +137,8 @@ enum Department {
   logistica,
 }
 
+// Lista de empleados fake - comentada para mantener como referencia
+/*
 final List<Employee> employees = [
   Employee(
     id: 1,
@@ -218,3 +311,4 @@ final List<Employee> employees = [
     vacationDaysAvailable: 5.0,
   ),
 ];
+*/

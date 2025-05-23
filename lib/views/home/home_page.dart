@@ -2,7 +2,6 @@ import 'package:dlza_legal_app/views/home/components/birthdays_list.dart';
 import 'package:dlza_legal_app/views/home/components/contracts_expiration_chart.dart';
 import 'package:dlza_legal_app/views/home/components/user_profile_section.dart';
 import 'package:flutter/material.dart';
-import 'package:dlza_legal_app/core/models/employee.dart';
 import 'package:dlza_legal_app/core/blocs/agency/agency_bloc.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 

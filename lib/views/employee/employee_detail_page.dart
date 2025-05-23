@@ -33,7 +33,7 @@ class EmployeeDetailPage extends StatelessWidget {
                 _buildInfoRow(
                   context: context,
                   label: 'Documento',
-                  value: employee.document,
+                  value: employee.documento,
                   icon: Icons.badge,
                 ),
                 _buildInfoRow(
@@ -126,9 +126,9 @@ class EmployeeDetailPage extends StatelessWidget {
                 _buildContactRow(
                   context: context,
                   label: 'Email',
-                  value: employee.email,
+                  value: employee.email ?? '',
                   icon: Icons.email,
-                  onTap: () => _sendEmail(employee.email),
+                  onTap: () => _sendEmail(employee.email ?? ''),
                 ),
               ],
             ),

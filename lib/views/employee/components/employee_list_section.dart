@@ -1,6 +1,6 @@
 import 'package:dlza_legal_app/core/blocs/employee/employee_bloc.dart';
-import 'package:dlza_legal_app/views/personal/components/employee_card.dart';
-import 'package:dlza_legal_app/views/personal/employee_detail_page.dart';
+import 'package:dlza_legal_app/views/employee/components/employee_card.dart';
+import 'package:dlza_legal_app/views/employee/employee_detail_page.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -11,7 +11,7 @@ class EmployeeListSection extends StatelessWidget {
   Widget build(BuildContext context) {
     return BlocBuilder<EmployeeBloc, EmployeeState>(
       builder: (context, state) {
-        if (state is EmployeeInitial) {
+        if (state is EmployeeLoading) {
           return const Center(child: CircularProgressIndicator());
         } else if (state is EmployeeError) {
           return Center(

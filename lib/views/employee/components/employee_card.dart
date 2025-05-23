@@ -148,7 +148,7 @@ class EmployeeCard extends StatelessWidget {
                 icon: Icons.email,
                 label: 'Email',
                 color: Colors.red,
-                onPressed: () => _sendEmail(employee.email),
+                onPressed: () => _sendEmail(employee.email ?? ''),
               ),
             ],
           ),

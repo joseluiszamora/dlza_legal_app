@@ -118,6 +118,9 @@ class BirthdaysList extends StatelessWidget {
   }
 
   List<Employee> _getUpcomingBirthdays(int limit) {
+    // TODO: Integrar con EmployeeBloc para obtener empleados reales
+    final List<Employee> employees = []; // Lista vacía temporal
+
     final now = DateTime.now();
     final maxDateLimit = DateTime(
       now.year,
