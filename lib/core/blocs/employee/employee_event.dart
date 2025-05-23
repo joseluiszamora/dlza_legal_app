@@ -7,7 +7,22 @@ abstract class EmployeeEvent extends Equatable {
   List<Object> get props => [];
 }
 
-class LoadEmployees extends EmployeeEvent {}
+class LoadEmployees extends EmployeeEvent {
+  final int page;
+  final int pageSize;
+  final bool loadMore;
+  final Area? filterByArea;
+
+  const LoadEmployees({
+    this.page = 1,
+    this.pageSize = 20,
+    this.loadMore = false,
+    this.filterByArea,
+  });
+
+  @override
+  List<Object> get props => [page, pageSize, loadMore, filterByArea ?? ''];
+}
 
 class LoadEmployeeDetails extends EmployeeEvent {
   final int employeeId;
@@ -37,6 +52,19 @@ class FilterByArea extends EmployeeEvent {
 }
 
 class ClearAreaFilter extends EmployeeEvent {}
+
+class LoadNextPage extends EmployeeEvent {}
+
+class LoadPreviousPage extends EmployeeEvent {}
+
+class GoToPage extends EmployeeEvent {
+  final int page;
+
+  const GoToPage(this.page);
+
+  @override
+  List<Object> get props => [page];
+}
 
 // Mantenemos compatibilidad con los eventos existentes
 class FilterByDepartment extends EmployeeEvent {

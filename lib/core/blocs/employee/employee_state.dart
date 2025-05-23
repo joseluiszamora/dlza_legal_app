@@ -17,6 +17,15 @@ class EmployeeLoaded extends EmployeeState {
   final Area? selectedArea;
   final Department? selectedDepartment; // Mantenemos para compatibilidad
 
+  // Campos de paginación
+  final int currentPage;
+  final int totalPages;
+  final int totalEmployees;
+  final int employeesPerPage;
+  final bool hasNextPage;
+  final bool hasPreviousPage;
+  final bool isLoadingMore;
+
   const EmployeeLoaded({
     required this.employees,
     required this.filteredEmployees,
@@ -24,6 +33,13 @@ class EmployeeLoaded extends EmployeeState {
     this.searchQuery = '',
     this.selectedArea,
     this.selectedDepartment,
+    this.currentPage = 1,
+    this.totalPages = 1,
+    this.totalEmployees = 0,
+    this.employeesPerPage = 20,
+    this.hasNextPage = false,
+    this.hasPreviousPage = false,
+    this.isLoadingMore = false,
   });
 
   EmployeeLoaded copyWith({
@@ -35,6 +51,13 @@ class EmployeeLoaded extends EmployeeState {
     Department? selectedDepartment,
     bool? clearArea,
     bool? clearDepartment,
+    int? currentPage,
+    int? totalPages,
+    int? totalEmployees,
+    int? employeesPerPage,
+    bool? hasNextPage,
+    bool? hasPreviousPage,
+    bool? isLoadingMore,
   }) {
     return EmployeeLoaded(
       employees: employees ?? this.employees,
@@ -47,6 +70,13 @@ class EmployeeLoaded extends EmployeeState {
           clearDepartment == true
               ? null
               : selectedDepartment ?? this.selectedDepartment,
+      currentPage: currentPage ?? this.currentPage,
+      totalPages: totalPages ?? this.totalPages,
+      totalEmployees: totalEmployees ?? this.totalEmployees,
+      employeesPerPage: employeesPerPage ?? this.employeesPerPage,
+      hasNextPage: hasNextPage ?? this.hasNextPage,
+      hasPreviousPage: hasPreviousPage ?? this.hasPreviousPage,
+      isLoadingMore: isLoadingMore ?? this.isLoadingMore,
     );
   }
 
@@ -58,6 +88,13 @@ class EmployeeLoaded extends EmployeeState {
     searchQuery,
     selectedArea ?? Area(id: -1, nombre: '', createdAt: DateTime.now()),
     selectedDepartment ?? Department.legal,
+    currentPage,
+    totalPages,
+    totalEmployees,
+    employeesPerPage,
+    hasNextPage,
+    hasPreviousPage,
+    isLoadingMore,
   ];
 }
 
