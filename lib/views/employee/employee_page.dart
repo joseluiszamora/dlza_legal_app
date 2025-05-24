@@ -18,10 +18,10 @@ class EmployeePage extends StatelessWidget {
         child: Column(
           children: [
             const SearchSection(),
-            const AreaFilterSection(),
+            // const AreaFilterSection(),
             const PaginationOptionsSection(),
             const Expanded(child: EmployeeListSection()),
-            const PaginationSection(),
+            // const PaginationSection(),
           ],
         ),
       ),

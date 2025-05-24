@@ -13,7 +13,7 @@ class PaginationSection extends StatelessWidget {
 
         if (state.totalPages <= 1) return const SizedBox.shrink();
         return Container(
-          padding: const EdgeInsets.all(16.0),
+          padding: const EdgeInsets.all(0),
           child: Column(
             children: [
               // Información de paginación
@@ -168,7 +168,7 @@ class PaginationSection extends StatelessWidget {
   /// Calcula qué páginas mostrar en la paginación
   /// Muestra hasta 5 páginas alrededor de la página actual
   List<int> _getVisiblePages(int currentPage, int totalPages) {
-    const int maxVisible = 5;
+    const int maxVisible = 3;
 
     if (totalPages <= maxVisible) {
       return List.generate(totalPages, (i) => i + 1);
