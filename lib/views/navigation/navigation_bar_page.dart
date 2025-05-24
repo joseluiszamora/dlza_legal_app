@@ -5,6 +5,7 @@ import 'package:dlza_legal_app/core/layouts/layout_main.dart';
 import 'package:dlza_legal_app/core/providers/theme_provider.dart';
 import 'package:dlza_legal_app/views/agency/agency_page.dart';
 import 'package:dlza_legal_app/views/home/home_page.dart';
+import 'package:dlza_legal_app/views/marca/marca_page.dart';
 import 'package:dlza_legal_app/views/navigation/components/header_section.dart';
 import 'package:dlza_legal_app/views/employee/employee_page.dart';
 import 'package:flutter/material.dart';
@@ -21,7 +22,7 @@ class NavigationBarPage extends StatefulWidget {
 }
 
 class _NavigationBarPageState extends State<NavigationBarPage> {
-  int _pageSelected = 1;
+  int _pageSelected = 3;
   final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
 
   @override
@@ -33,9 +34,15 @@ class _NavigationBarPageState extends State<NavigationBarPage> {
       const EmployeePage(),
       const HomePage(),
       const AgencyPage(),
+      const MarcaPage(),
     ];
 
-    List<String> titles = ['Directorio de Personal', 'Inicio', 'Agencias'];
+    List<String> titles = [
+      'Directorio de Personal',
+      'Inicio',
+      'Agencias',
+      'Marcas',
+    ];
 
     return Scaffold(
       key: _scaffoldKey,
@@ -81,6 +88,7 @@ class _NavigationBarPageState extends State<NavigationBarPage> {
                 GButton(icon: LineIcons.userCircle, text: 'Personas'),
                 GButton(icon: LineIcons.home, text: 'Inicio'),
                 GButton(icon: LineIcons.fileContract, text: 'Agencias'),
+                GButton(icon: LineIcons.sign, text: 'Marcas'),
               ],
               selectedIndex: _pageSelected,
               onTabChange: (index) {
