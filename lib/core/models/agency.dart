@@ -1,15 +1,14 @@
 import 'package:intl/intl.dart';
+import 'contrato_agencia.dart';
 
 class Agency {
   final int id;
-  final String name;
-  final String agent;
-  final String city;
-  final String address;
+  final String nombre;
+  final String direccion;
+  final int agenteId;
+  final int ciudadId;
   final String tipoGarantia;
   final double montoGarantia;
-  final DateTime? contratoAgenciaInicio;
-  final DateTime? contratoAgenciaFin;
   final bool ci;
   final bool croquis;
   final bool facturaServicioBasico;
@@ -21,17 +20,25 @@ class Agency {
   final String testimonioNotarial;
   final DateTime? vigenciaLicenciaFuncionamiento;
   final String observaciones;
+  final DateTime createdAt;
+
+  // Datos de relaciones anidadas
+  final String? agenteNombres;
+  final String? agenteApellidos;
+  final String? agenteTelefono;
+  final String? agenteEmail;
+  final String? ciudadNombre;
+  final String? ciudadPais;
+  final List<ContratoAgencia>? contratos;
 
   Agency({
     required this.id,
-    required this.name,
-    required this.agent,
-    required this.city,
-    required this.address,
+    required this.nombre,
+    required this.direccion,
+    required this.agenteId,
+    required this.ciudadId,
     required this.tipoGarantia,
     required this.montoGarantia,
-    this.contratoAgenciaInicio,
-    this.contratoAgenciaFin,
     required this.ci,
     required this.croquis,
     required this.facturaServicioBasico,
@@ -43,25 +50,26 @@ class Agency {
     required this.testimonioNotarial,
     this.vigenciaLicenciaFuncionamiento,
     required this.observaciones,
+    required this.createdAt,
+    // Datos de relaciones
+    this.agenteNombres,
+    this.agenteApellidos,
+    this.agenteTelefono,
+    this.agenteEmail,
+    this.ciudadNombre,
+    this.ciudadPais,
+    this.contratos,
   });
 
   factory Agency.fromJson(Map<String, dynamic> json) {
     return Agency(
       id: json['id'] as int,
-      name: json['nombre'] as String,
-      agent: json['agente'] as String? ?? 'Sin agente',
-      city: json['ciudad'] as String? ?? 'Sin ciudad',
-      address: json['direccion'] as String? ?? 'Sin dirección',
+      nombre: json['nombre'] as String,
+      direccion: json['direccion'] as String? ?? 'Sin dirección',
+      agenteId: json['agenteId'] as int,
+      ciudadId: json['ciudadId'] as int,
       tipoGarantia: json['tipoGarantia'] as String? ?? 'Sin garantía',
       montoGarantia: (json['montoGarantia'] as num?)?.toDouble() ?? 0.0,
-      contratoAgenciaInicio:
-          json['contratoAgenciaInicio'] != null
-              ? DateTime.parse(json['contratoAgenciaInicio'] as String)
-              : null,
-      contratoAgenciaFin:
-          json['contratoAgenciaFin'] != null
-              ? DateTime.parse(json['contratoAgenciaFin'] as String)
-              : null,
       ci: json['ci'] as bool? ?? false,
       croquis: json['croquis'] as bool? ?? false,
       facturaServicioBasico: json['facturaServicioBasico'] as bool? ?? false,
@@ -78,13 +86,53 @@ class Agency {
               ? DateTime.parse(json['vigenciaLicenciaFuncionamiento'] as String)
               : null,
       observaciones: json['observaciones'] as String? ?? 'Sin observaciones',
+      createdAt:
+          json['createdAt'] != null
+              ? DateTime.parse(json['createdAt'] as String)
+              : DateTime.now(),
+      // Datos de relaciones anidadas
+      agenteNombres: json['agente']?['nombres'],
+      agenteApellidos: json['agente']?['apellidos'],
+      agenteTelefono: json['agente']?['telefono'],
+      agenteEmail: json['agente']?['email'],
+      ciudadNombre: json['ciudad']?['nombre'],
+      ciudadPais: json['ciudad']?['pais'],
+      contratos:
+          (json['contratos'] as List<dynamic>?)
+              ?.map((e) => ContratoAgencia.fromJson(e))
+              .toList(),
     );
   }
+
+  // Getters para compatibilidad con el código existente
+  String get name => nombre;
+  String get agent =>
+      agenteNombres != null && agenteApellidos != null
+          ? '$agenteNombres $agenteApellidos'
+          : 'Sin agente';
+  String get city => ciudadNombre ?? 'Sin ciudad';
+  String get address => direccion;
 
   String get formattedMontoGarantia {
     final formatter = NumberFormat.currency(symbol: 'Bs. ', decimalDigits: 2);
     return formatter.format(montoGarantia);
   }
+
+  // Obtener el contrato más reciente activo
+  ContratoAgencia? get contratoActivo {
+    if (contratos == null || contratos!.isEmpty) return null;
+
+    try {
+      return contratos!
+          .where((c) => c.estaActivo)
+          .reduce((a, b) => a.fechaInicio.isAfter(b.fechaInicio) ? a : b);
+    } catch (e) {
+      return null;
+    }
+  }
+
+  DateTime? get contratoAgenciaInicio => contratoActivo?.fechaInicio;
+  DateTime? get contratoAgenciaFin => contratoActivo?.fechaFin;
 
   String get contratoFinFormatted {
     return contratoAgenciaFin != null
@@ -142,15 +190,3 @@ class Agency {
     }
   }
 }
-
-// Lista de ciudades disponibles para filtrar
-const List<String> availableCities = [
-  'La Paz',
-  'El Alto',
-  'Cochabamba',
-  'Santa Cruz',
-  'Oruro',
-  'Potosí',
-  'Sucre',
-  'Tarija',
-];

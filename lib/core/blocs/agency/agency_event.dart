@@ -7,7 +7,22 @@ abstract class AgencyEvent extends Equatable {
   List<Object> get props => [];
 }
 
-class LoadAgencies extends AgencyEvent {}
+class LoadAgencies extends AgencyEvent {
+  final int page;
+  final int pageSize;
+  final bool loadMore;
+  final String? filterByCity;
+
+  const LoadAgencies({
+    this.page = 1,
+    this.pageSize = 20,
+    this.loadMore = false,
+    this.filterByCity,
+  });
+
+  @override
+  List<Object> get props => [page, pageSize, loadMore, filterByCity ?? ''];
+}
 
 class LoadAgencyDetails extends AgencyEvent {
   final int agencyId;
@@ -37,3 +52,16 @@ class FilterAgenciesByCity extends AgencyEvent {
 }
 
 class ClearCityFilter extends AgencyEvent {}
+
+class LoadNextPage extends AgencyEvent {}
+
+class LoadPreviousPage extends AgencyEvent {}
+
+class GoToPage extends AgencyEvent {
+  final int page;
+
+  const GoToPage(this.page);
+
+  @override
+  List<Object> get props => [page];
+}

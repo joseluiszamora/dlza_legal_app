@@ -1,6 +1,5 @@
 import 'package:dlza_legal_app/core/blocs/agency/agency_bloc.dart';
 import 'package:dlza_legal_app/core/components/filter_chip_item.dart';
-import 'package:dlza_legal_app/core/models/agency.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -30,16 +29,16 @@ class CityFilterSection extends StatelessWidget {
                 },
               ),
               const SizedBox(width: 8),
-
-              ...availableCities.map((city) {
+              // Usar las ciudades dinámicas desde el estado
+              ...loadedState.cities.map((ciudad) {
                 return Padding(
                   padding: const EdgeInsets.only(right: 8.0),
                   child: FilterChipItem(
-                    label: city,
-                    isSelected: loadedState.selectedCity == city,
+                    label: ciudad.nombre,
+                    isSelected: loadedState.selectedCity == ciudad.nombre,
                     onSelected: (_) {
                       context.read<AgencyBloc>().add(
-                        FilterAgenciesByCity(city),
+                        FilterAgenciesByCity(ciudad.nombre),
                       );
                     },
                   ),

@@ -92,7 +92,8 @@ class Employee {
   String get phone => telefono ?? '';
   String get address => direccion ?? '';
   String get image =>
-      imagenUrl ?? 'https://randomuser.me/api/portraits/men/1.jpg';
+      imagenUrl ??
+      'https://kammuhwatpgwkaaoucbm.supabase.co/storage/v1/object/public/empleados//vaca.png';
   DateTime get birthDate => fechaNacimiento;
   DateTime get admissionDate => fechaIngreso;
   double get salary => salario.toDouble();
