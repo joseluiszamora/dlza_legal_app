@@ -1,3 +1,4 @@
+import 'package:dlza_legal_app/core/blocs/auth/auth_bloc.dart';
 import 'package:dlza_legal_app/core/constants/app_colors.dart';
 import 'package:dlza_legal_app/core/constants/app_defaults.dart';
 import 'package:dlza_legal_app/core/layouts/layout_main.dart';
@@ -193,6 +194,27 @@ class _NavigationBarPageState extends State<NavigationBarPage> {
   }
 
   void _logout(BuildContext context) {
-    Navigator.pop(context); // Cierra el drawer
+    // Navigator.pop(context);
+    showDialog(
+      context: context,
+      builder:
+          (context) => AlertDialog(
+            title: const Text('Cerrar Sesión'),
+            content: const Text('¿Está seguro que desea cerrar sesión?'),
+            actions: [
+              TextButton(
+                onPressed: () => Navigator.pop(context),
+                child: const Text('Cancelar'),
+              ),
+              TextButton(
+                onPressed: () {
+                  Navigator.pop(context);
+                  context.read<AuthBloc>().add(AuthLogout());
+                },
+                child: const Text('Cerrar Sesión'),
+              ),
+            ],
+          ),
+    ); // Cierra el drawer
   }
 } // Lógica para cerrar sesión

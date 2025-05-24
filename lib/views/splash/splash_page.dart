@@ -1,7 +1,9 @@
 import 'dart:async';
+import 'package:dlza_legal_app/core/blocs/auth/auth_bloc.dart';
 import 'package:dlza_legal_app/core/constants/app_colors.dart';
 import 'package:dlza_legal_app/core/routes/app_routes.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 
 class SplashPage extends StatefulWidget {
@@ -17,10 +19,22 @@ class _SplashPageState extends State<SplashPage> {
   @override
   void initState() {
     super.initState();
-    // Navegar automáticamente después de 3 segundos
-    _timer = Timer(const Duration(seconds: 1), () {
+    _initializeApp();
+  }
+
+  void _initializeApp() {
+    // Verificar el estado de autenticación
+    context.read<AuthBloc>().add(AuthCheckStatus());
+
+    // Navegar automáticamente después de verificar la autenticación
+    _timer = Timer(const Duration(seconds: 2), () {
       if (mounted) {
-        context.go(AppRoutes.navigation);
+        final authState = context.read<AuthBloc>().state;
+        if (authState is AuthAuthenticated) {
+          context.go(AppRoutes.navigation);
+        } else {
+          context.go(AppRoutes.authLogin);
+        }
       }
     });
   }
@@ -36,38 +50,50 @@ class _SplashPageState extends State<SplashPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Theme.of(context).scaffoldBackgroundColor,
-      body: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            // Logo o imagen de la app
-            Image.asset(
-              'assets/images/logo.png',
-              height: 150,
-              // Si la imagen no existe, usa un fallback
-              errorBuilder:
-                  (context, error, stackTrace) => const Icon(
-                    Icons.icecream,
-                    size: 150,
-                    color: AppColors.primary,
-                  ),
-            ),
-            const SizedBox(height: 30),
-            Text(
-              'Dlza Legal',
-              style: Theme.of(context).textTheme.titleLarge?.copyWith(
-                fontSize: 32,
-                fontWeight: FontWeight.bold,
+      body: BlocListener<AuthBloc, AuthState>(
+        listener: (context, state) {
+          // Si el estado cambia durante el splash, navegamos inmediatamente
+          if (state is AuthAuthenticated || state is AuthUnauthenticated) {
+            _timer?.cancel();
+            if (mounted) {
+              if (state is AuthAuthenticated) {
+                context.go(AppRoutes.navigation);
+              } else {
+                context.go(AppRoutes.authLogin);
+              }
+            }
+          }
+        },
+        child: Center(
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              // Logo o imagen de la app
+              Image.asset(
+                'assets/images/logo.png',
+                height: 150,
+                // Si la imagen no existe, usa un fallback
+                errorBuilder:
+                    (context, error, stackTrace) => const Icon(
+                      Icons.icecream,
+                      size: 120,
+                      color: AppColors.primary,
+                    ),
               ),
-              // style: TextStyle(
-              //   fontSize: 32,
-              //   fontWeight: FontWeight.bold,
-              //   color: Colors.white,
-              // ),
-            ),
-            const SizedBox(height: 50),
-            const CircularProgressIndicator(color: AppColors.primary),
-          ],
+              const SizedBox(height: 30),
+              Text(
+                'DLZA Legal',
+                style: Theme.of(context).textTheme.titleLarge?.copyWith(
+                  fontSize: 32,
+                  fontWeight: FontWeight.bold,
+                ),
+              ),
+              const SizedBox(height: 50),
+              CircularProgressIndicator(
+                color: Theme.of(context).colorScheme.primary,
+              ),
+            ],
+          ),
         ),
       ),
     );
