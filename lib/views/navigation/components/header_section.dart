@@ -42,12 +42,12 @@ class HeaderSection extends StatelessWidget implements PreferredSizeWidget {
         ),
       ),
       actions: [
-        CircleAvatar(
-          radius: 16,
-          backgroundImage: NetworkImage(
-            'https://randomuser.me/api/portraits/men/7.jpg',
-          ),
-        ),
+        // CircleAvatar(
+        //   radius: 16,
+        //   backgroundImage: NetworkImage(
+        //     'https://randomuser.me/api/portraits/men/7.jpg',
+        //   ),
+        // ),
         IconButton(
           icon: Icon(
             Icons.notifications,

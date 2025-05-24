@@ -8,6 +8,7 @@ import 'package:dlza_legal_app/views/home/home_page.dart';
 import 'package:dlza_legal_app/views/navigation/components/header_section.dart';
 import 'package:dlza_legal_app/views/employee/employee_page.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:google_nav_bar/google_nav_bar.dart';
 import 'package:line_icons/line_icons.dart';
 import 'package:provider/provider.dart';
@@ -150,33 +151,79 @@ class _NavigationBarPageState extends State<NavigationBarPage> {
   }
 
   Widget _buildDrawerHeader() {
-    return DrawerHeader(
-      decoration: BoxDecoration(color: const Color(0xFF0bbfdf)),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        mainAxisAlignment: MainAxisAlignment.end,
-        children: [
-          CircleAvatar(
-            radius: 30,
-            backgroundImage: NetworkImage(
-              'https://randomuser.me/api/portraits/men/7.jpg',
+    return BlocBuilder<AuthBloc, AuthState>(
+      builder: (context, state) {
+        if (state is AuthAuthenticated) {
+          final user = state.user;
+          return DrawerHeader(
+            decoration: BoxDecoration(color: const Color(0xFF0bbfdf)),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              mainAxisAlignment: MainAxisAlignment.end,
+              children: [
+                CircleAvatar(
+                  radius: 30,
+                  backgroundImage:
+                      user.imagenUrl?.isNotEmpty == true
+                          ? NetworkImage(user.imagenUrl!)
+                          : null,
+                  child:
+                      user.imagenUrl?.isEmpty != false
+                          ? Text(
+                            '${user.nombres.isNotEmpty ? user.nombres[0] : ''}${user.apellidos.isNotEmpty ? user.apellidos[0] : ''}',
+                            style: TextStyle(
+                              color: Colors.white,
+                              fontSize: 20,
+                              fontWeight: FontWeight.bold,
+                            ),
+                          )
+                          : null,
+                ),
+                SizedBox(height: 10),
+                Text(
+                  '${user.nombres} ${user.apellidos}',
+                  style: TextStyle(
+                    color: Colors.white,
+                    fontSize: 18,
+                    fontWeight: FontWeight.bold,
+                  ),
+                  overflow: TextOverflow.ellipsis,
+                ),
+                Text(
+                  '${user.cargo ?? 'Sin cargo'} - ${user.area ?? 'Sin área'}',
+                  style: TextStyle(color: Colors.white70, fontSize: 14),
+                  overflow: TextOverflow.ellipsis,
+                ),
+              ],
             ),
+          );
+        }
+
+        // Estado de carga o no autenticado
+        return DrawerHeader(
+          decoration: BoxDecoration(color: const Color(0xFF0bbfdf)),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            mainAxisAlignment: MainAxisAlignment.end,
+            children: [
+              CircleAvatar(
+                radius: 30,
+                child: Icon(Icons.person, size: 30, color: Colors.white),
+              ),
+              SizedBox(height: 10),
+              Text(
+                'Cargando...',
+                style: TextStyle(
+                  color: Colors.white,
+                  fontSize: 18,
+                  fontWeight: FontWeight.bold,
+                ),
+              ),
+              Text('', style: TextStyle(color: Colors.white70, fontSize: 14)),
+            ],
           ),
-          SizedBox(height: 10),
-          Text(
-            'Juan Solo',
-            style: TextStyle(
-              color: Colors.white,
-              fontSize: 18,
-              fontWeight: FontWeight.bold,
-            ),
-          ),
-          Text(
-            'usuario@example.com',
-            style: TextStyle(color: Colors.white70, fontSize: 14),
-          ),
-        ],
-      ),
+        );
+      },
     );
   }
 
