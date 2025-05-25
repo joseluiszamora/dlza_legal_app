@@ -39,7 +39,7 @@ class PaginationSection extends StatelessWidget {
                     onPressed:
                         state.currentPage > 1
                             ? () => context.read<EmployeeBloc>().add(
-                              const GoToPage(1),
+                              const GoToEmployeePage(1),
                             )
                             : null,
                   ),
@@ -52,7 +52,7 @@ class PaginationSection extends StatelessWidget {
                     onPressed:
                         state.hasPreviousPage
                             ? () => context.read<EmployeeBloc>().add(
-                              LoadPreviousPage(),
+                              LoadPreviousEmployeePage(),
                             )
                             : null,
                   ),
@@ -67,8 +67,9 @@ class PaginationSection extends StatelessWidget {
                     tooltip: 'Página siguiente',
                     onPressed:
                         state.hasNextPage
-                            ? () =>
-                                context.read<EmployeeBloc>().add(LoadNextPage())
+                            ? () => context.read<EmployeeBloc>().add(
+                              LoadNextEmployeePage(),
+                            )
                             : null,
                   ),
 
@@ -80,7 +81,7 @@ class PaginationSection extends StatelessWidget {
                     onPressed:
                         state.currentPage < state.totalPages
                             ? () => context.read<EmployeeBloc>().add(
-                              GoToPage(state.totalPages),
+                              GoToEmployeePage(state.totalPages),
                             )
                             : null,
                   ),
@@ -142,7 +143,8 @@ class PaginationSection extends StatelessWidget {
         child: ElevatedButton(
           onPressed:
               !isCurrentPage
-                  ? () => context.read<EmployeeBloc>().add(GoToPage(page))
+                  ? () =>
+                      context.read<EmployeeBloc>().add(GoToEmployeePage(page))
                   : null,
           style: ElevatedButton.styleFrom(
             padding: EdgeInsets.zero,

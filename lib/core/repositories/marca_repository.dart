@@ -16,32 +16,21 @@ class MarcaRepository {
           .select('*')
           .order('createdAt', ascending: false);
 
-      // Obtener un rango más amplio para permitir filtrado local
-      final rangeMultiplier =
-          searchQuery != null && searchQuery.isNotEmpty ? 5 : 1;
-      final response = await query.range(
-        page * limit,
-        ((page + 1) * limit * rangeMultiplier) - 1,
-      );
+      // Obtener datos de la base de datos
+      final response = await query.range(page * limit, (page + 1) * limit - 1);
 
       List<Marca> marcas =
           (response as List).map((json) => Marca.fromJson(json)).toList();
 
-      // Implementar filtro local por nombre
-      if (searchQuery != null && searchQuery.isNotEmpty) {
+      // Filtro simple por nombre de marca
+      if (searchQuery != null && searchQuery.trim().isNotEmpty) {
+        final searchLower = searchQuery.toLowerCase().trim();
         marcas =
             marcas
                 .where(
-                  (marca) => marca.nombre.toLowerCase().contains(
-                    searchQuery.toLowerCase(),
-                  ),
+                  (marca) => marca.nombre.toLowerCase().contains(searchLower),
                 )
                 .toList();
-
-        // Tomar solo los elementos necesarios para esta página
-        final startIndex = 0;
-        final endIndex = limit;
-        marcas = marcas.skip(startIndex).take(endIndex).toList();
       }
 
       return marcas;
@@ -95,14 +84,13 @@ class MarcaRepository {
       List<Marca> marcas =
           (response as List).map((json) => Marca.fromJson(json)).toList();
 
-      // Aplicar mismo filtro de búsqueda que en getMarcas
-      if (searchQuery != null && searchQuery.isNotEmpty) {
+      // Aplicar filtro simple por nombre de marca
+      if (searchQuery != null && searchQuery.trim().isNotEmpty) {
+        final searchLower = searchQuery.toLowerCase().trim();
         marcas =
             marcas
                 .where(
-                  (marca) => marca.nombre.toLowerCase().contains(
-                    searchQuery.toLowerCase(),
-                  ),
+                  (marca) => marca.nombre.toLowerCase().contains(searchLower),
                 )
                 .toList();
       }

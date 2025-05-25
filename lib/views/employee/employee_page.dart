@@ -1,3 +1,4 @@
+import 'package:dlza_legal_app/core/components/search_section_general.dart';
 import 'package:dlza_legal_app/views/employee/components/area_filter_section.dart';
 import 'package:dlza_legal_app/views/employee/components/employee_list_section.dart';
 import 'package:dlza_legal_app/views/employee/components/pagination_section.dart';

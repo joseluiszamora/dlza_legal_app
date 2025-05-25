@@ -215,7 +215,7 @@ class _MarcaDetailPageState extends State<MarcaDetailPage> {
               'Información Detallada',
               style: Theme.of(
                 context,
-              ).textTheme.titleLarge?.copyWith(fontWeight: FontWeight.bold),
+              ).textTheme.titleMedium?.copyWith(fontWeight: FontWeight.bold),
             ),
             const SizedBox(height: 16),
             _buildDetailRow('Número de Registro', _marca!.numeroRegistro),
@@ -290,9 +290,9 @@ class _MarcaDetailPageState extends State<MarcaDetailPage> {
                 const SizedBox(width: 8),
                 Text(
                   'Historial de Renovaciones',
-                  style: Theme.of(
-                    context,
-                  ).textTheme.titleLarge?.copyWith(fontWeight: FontWeight.bold),
+                  style: Theme.of(context).textTheme.titleMedium?.copyWith(
+                    fontWeight: FontWeight.bold,
+                  ),
                 ),
               ],
             ),

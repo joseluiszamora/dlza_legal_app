@@ -1,4 +1,6 @@
 import 'package:dlza_legal_app/core/blocs/auth/auth_bloc.dart';
+import 'package:dlza_legal_app/core/blocs/blocs.dart';
+import 'package:dlza_legal_app/core/blocs/service_locator.dart';
 import 'package:dlza_legal_app/core/repositories/auth_repository.dart';
 import 'package:dlza_legal_app/core/routes/app_router.dart';
 import 'package:dlza_legal_app/core/themes/theme.dart';
@@ -10,7 +12,7 @@ import 'package:provider/provider.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
-
+  serviceLocatorInit();
   await Supabase.initialize(
     url: 'https://kammuhwatpgwkaaoucbm.supabase.co',
     anonKey:
@@ -24,9 +26,25 @@ void main() async {
         // Repositorio de autenticación
         Provider<AuthRepository>(create: (_) => AuthRepository()),
       ],
-      child: const MyApp(),
+      child: const BlocsProviders(),
     ),
   );
+}
+
+class BlocsProviders extends StatelessWidget {
+  const BlocsProviders({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return MultiBlocProvider(
+      providers: [
+        BlocProvider(create: (context) => getIt<AgencyBloc>(), lazy: true),
+        BlocProvider(create: (context) => getIt<MarcaBloc>(), lazy: true),
+        BlocProvider(create: (context) => getIt<EmployeeBloc>(), lazy: true),
+      ],
+      child: const MyApp(),
+    );
+  }
 }
 
 class MyApp extends StatelessWidget {

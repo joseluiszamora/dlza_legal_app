@@ -53,14 +53,14 @@ class FilterByArea extends EmployeeEvent {
 
 class ClearAreaFilter extends EmployeeEvent {}
 
-class LoadNextPage extends EmployeeEvent {}
+class LoadNextEmployeePage extends EmployeeEvent {}
 
-class LoadPreviousPage extends EmployeeEvent {}
+class LoadPreviousEmployeePage extends EmployeeEvent {}
 
-class GoToPage extends EmployeeEvent {
+class GoToEmployeePage extends EmployeeEvent {
   final int page;
 
-  const GoToPage(this.page);
+  const GoToEmployeePage(this.page);
 
   @override
   List<Object> get props => [page];

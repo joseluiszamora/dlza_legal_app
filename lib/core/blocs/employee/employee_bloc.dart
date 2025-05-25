@@ -21,9 +21,9 @@ class EmployeeBloc extends Bloc<EmployeeEvent, EmployeeState> {
     on<ClearAreaFilter>(_onClearAreaFilter);
     on<FilterByDepartment>(_onFilterByDepartment);
     on<ClearDepartmentFilter>(_onClearDepartmentFilter);
-    on<LoadNextPage>(_onLoadNextPage);
-    on<LoadPreviousPage>(_onLoadPreviousPage);
-    on<GoToPage>(_onGoToPage);
+    on<LoadNextEmployeePage>(_onLoadNextPage);
+    on<LoadPreviousEmployeePage>(_onLoadPreviousPage);
+    on<GoToEmployeePage>(_onGoToPage);
   }
 
   Future<void> _onLoadEmployees(
@@ -344,7 +344,10 @@ class EmployeeBloc extends Bloc<EmployeeEvent, EmployeeState> {
     }
   }
 
-  void _onLoadNextPage(LoadNextPage event, Emitter<EmployeeState> emit) {
+  void _onLoadNextPage(
+    LoadNextEmployeePage event,
+    Emitter<EmployeeState> emit,
+  ) {
     if (state is! EmployeeLoaded) return;
 
     final currentState = state as EmployeeLoaded;
@@ -360,7 +363,7 @@ class EmployeeBloc extends Bloc<EmployeeEvent, EmployeeState> {
   }
 
   void _onLoadPreviousPage(
-    LoadPreviousPage event,
+    LoadPreviousEmployeePage event,
     Emitter<EmployeeState> emit,
   ) {
     if (state is! EmployeeLoaded) return;
@@ -377,7 +380,7 @@ class EmployeeBloc extends Bloc<EmployeeEvent, EmployeeState> {
     }
   }
 
-  void _onGoToPage(GoToPage event, Emitter<EmployeeState> emit) {
+  void _onGoToPage(GoToEmployeePage event, Emitter<EmployeeState> emit) {
     if (state is! EmployeeLoaded) return;
 
     final currentState = state as EmployeeLoaded;
