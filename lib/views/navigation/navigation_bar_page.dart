@@ -69,7 +69,7 @@ class _NavigationBarPageState extends State<NavigationBarPage> {
         ),
         child: SafeArea(
           child: Container(
-            padding: const EdgeInsets.symmetric(horizontal: 15.0, vertical: 8),
+            padding: const EdgeInsets.symmetric(horizontal: 5.0, vertical: 8),
             child: GNav(
               curve: Curves.easeIn,
               rippleColor: Colors.grey[300]!,

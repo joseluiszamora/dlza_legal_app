@@ -156,18 +156,18 @@ class AgencyDetail extends StatelessWidget {
 
           // Información del contrato
           _buildInfoSection(context, 'Información del Contrato', [
-            _buildInfoItem(
-              context,
-              'Testimonio Notarial',
-              agency.testimonioNotarial,
-              LineIcons.fileContract,
-            ),
-            _buildInfoItem(
-              context,
-              'Tipo de Garantía',
-              agency.tipoGarantia,
-              Icons.security,
-            ),
+            // _buildInfoItem(
+            //   context,
+            //   'Testimonio Notarial',
+            //   agency.testimonioNotarial,
+            //   LineIcons.fileContract,
+            // ),
+            // _buildInfoItem(
+            //   context,
+            //   'Tipo de Garantía',
+            //   agency.tipoGarantia,
+            //   Icons.security,
+            // ),
             _buildInfoItem(
               context,
               'Monto de Garantía',

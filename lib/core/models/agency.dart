@@ -34,21 +34,24 @@ class ContratoAgencia {
     return ContratoAgencia(
       id: json['id'],
       codigoContrato: json['codigoContrato'] ?? '',
-      contratoInicio: json['contratoInicio'] != null
-          ? DateTime.parse(json['contratoInicio'])
-          : null,
-      contratoFin: json['contratoFin'] != null
-          ? DateTime.parse(json['contratoFin'])
-          : null,
+      contratoInicio:
+          json['contratoInicio'] != null
+              ? DateTime.parse(json['contratoInicio'])
+              : null,
+      contratoFin:
+          json['contratoFin'] != null
+              ? DateTime.parse(json['contratoFin'])
+              : null,
       tipoGarantia: json['tipoGarantia'],
       montoGarantia: json['montoGarantia']?.toDouble(),
       testimonioNotarial: json['testimonioNotarial'],
       estado: json['estado'] ?? 'vigente',
       observaciones: json['observaciones'],
       activo: json['activo'] ?? false,
-      createdAt: json['createdAt'] != null 
-          ? DateTime.parse(json['createdAt'])
-          : DateTime.now(),
+      createdAt:
+          json['createdAt'] != null
+              ? DateTime.parse(json['createdAt'])
+              : DateTime.now(),
       agenciaId: json['agenciaId'],
     );
   }
@@ -81,7 +84,7 @@ class Agency {
   final String? observaciones;
   final int agenteId;
   final int ciudadId;
-  
+
   // Datos de relaciones
   final String? agenteNombres;
   final String? agenteApellidos;
@@ -105,7 +108,7 @@ class Agency {
     this.finContratoVigente,
     this.nitAgencia,
     this.contratoAlquiler,
-    required    this.observaciones,
+    this.observaciones,
     required this.agenteId,
     required this.ciudadId,
     // Datos de relaciones
@@ -127,16 +130,19 @@ class Agency {
       latitud: json['latitud']?.toDouble(),
       longitud: json['longitud']?.toDouble(),
       licenciaDeFuncionamiento: json['licenciaDeFuncionamiento'],
-      vigenciaLicenciaFuncionamiento: json['vigenciaLicenciaFuncionamiento'] != null
-          ? DateTime.parse(json['vigenciaLicenciaFuncionamiento'])
-          : null,
+      vigenciaLicenciaFuncionamiento:
+          json['vigenciaLicenciaFuncionamiento'] != null
+              ? DateTime.parse(json['vigenciaLicenciaFuncionamiento'])
+              : null,
       codigoContratoVigente: json['codigoContratoVigente'] ?? '0',
-      inicioContratoVigente: json['inicioContratoVigente'] != null
-          ? DateTime.parse(json['inicioContratoVigente'])
-          : null,
-      finContratoVigente: json['finContratoVigente'] != null
-          ? DateTime.parse(json['finContratoVigente'])
-          : null,
+      inicioContratoVigente:
+          json['inicioContratoVigente'] != null
+              ? DateTime.parse(json['inicioContratoVigente'])
+              : null,
+      finContratoVigente:
+          json['finContratoVigente'] != null
+              ? DateTime.parse(json['finContratoVigente'])
+              : null,
       nitAgencia: json['nitAgencia'],
       contratoAlquiler: json['contratoAlquiler'],
       observaciones: json['observaciones'],
@@ -148,11 +154,12 @@ class Agency {
       agenteEmail: json['agente']?['email'],
       ciudadNombre: json['ciudad']?['nombre'],
       ciudadPais: json['ciudad']?['pais'],
-      contratos: json['contratos'] != null
-          ? (json['contratos'] as List)
-              .map((c) => ContratoAgencia.fromJson(c))
-              .toList()
-          : null,
+      contratos:
+          json['contratos'] != null
+              ? (json['contratos'] as List)
+                  .map((c) => ContratoAgencia.fromJson(c))
+                  .toList()
+              : null,
     );
   }
 
@@ -161,7 +168,7 @@ class Agency {
   String get agent => '${agenteNombres ?? ''} ${agenteApellidos ?? ''}'.trim();
   String get city => ciudadNombre ?? '';
   String get address => direccion ?? '';
-  
+
   // Nuevos getters para la funcionalidad requerida
   String get tipoGarantiaVigente {
     if (contratos != null && contratos!.isNotEmpty) {
@@ -173,7 +180,7 @@ class Agency {
     }
     return 'No especificado';
   }
-  
+
   double get montoGarantiaVigente {
     if (contratos != null && contratos!.isNotEmpty) {
       final contratoActivo = contratos!.firstWhere(
@@ -184,16 +191,16 @@ class Agency {
     }
     return 0.0;
   }
-  
+
   DateTime? get fechaFinContrato => finContratoVigente;
-  
+
   int get diasParaVencimiento {
     if (finContratoVigente == null) return 0;
     final ahora = DateTime.now();
     final diferencia = finContratoVigente!.difference(ahora).inDays;
     return diferencia > 0 ? diferencia : 0;
   }
-  
+
   String get estadoContrato {
     if (finContratoVigente == null) return 'Sin fecha';
     final dias = diasParaVencimiento;
@@ -271,7 +278,7 @@ class Agency {
     }
     return null;
   }
-  
+
   String? get tipoGarantia {
     if (contratos != null && contratos!.isNotEmpty) {
       final contratoActivo = contratos!.firstWhere(
@@ -282,14 +289,15 @@ class Agency {
     }
     return null;
   }
-  
+
   // Getters para documentos (asumiendo que están en formato boolean)
   bool get ci => true; // Placeholder - ajustar según necesidad
   bool get croquis => true; // Placeholder - ajustar según necesidad
-  bool get facturaServicioBasico => true; // Placeholder - ajustar según necesidad
+  bool get facturaServicioBasico =>
+      true; // Placeholder - ajustar según necesidad
   String? get nit => nitAgencia;
   bool get ruat => true; // Placeholder - ajustar según necesidad
-  
+
   // Getter para compatibilidad con el gráfico de vencimientos
   DateTime? get contratoAgenciaFin => finContratoVigente;
 }
