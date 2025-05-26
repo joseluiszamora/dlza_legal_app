@@ -53,6 +53,8 @@ class FilterAgenciesByCity extends AgencyEvent {
 
 class ClearCityFilter extends AgencyEvent {}
 
+class RefreshAgencies extends AgencyEvent {}
+
 class LoadNextPage extends AgencyEvent {}
 
 class LoadPreviousPage extends AgencyEvent {}

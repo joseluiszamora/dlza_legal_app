@@ -272,7 +272,7 @@ class AgencyDetail extends StatelessWidget {
           agency.observaciones != 'Sin observaciones'
               ? _buildInfoSection(context, 'Observaciones', [
                 Text(
-                  agency.observaciones,
+                  agency.observaciones ?? 'Sin observaciones',
                   style: const TextStyle(
                     fontSize: 16,
                     fontWeight: FontWeight.w500,

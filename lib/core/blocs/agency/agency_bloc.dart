@@ -19,12 +19,13 @@ class AgencyBloc extends Bloc<AgencyEvent, AgencyState> {
     on<SearchAgencies>(_onSearchAgencies);
     on<FilterAgenciesByCity>(_onFilterAgenciesByCity);
     on<ClearCityFilter>(_onClearCityFilter);
+    on<RefreshAgencies>(_onRefreshAgencies);
     on<LoadNextPage>(_onLoadNextPage);
     on<LoadPreviousPage>(_onLoadPreviousPage);
     on<GoToPage>(_onGoToPage);
   }
 
-  Future<void> _onLoadAgencies(
+    Future<void> _onLoadAgencies(
     LoadAgencies event,
     Emitter<AgencyState> emit,
   ) async {
@@ -54,25 +55,29 @@ class AgencyBloc extends Bloc<AgencyEvent, AgencyState> {
             .select('*')
             .order('nombre', ascending: true);
 
-        _loadedCities =
-            (citiesResponse as List<dynamic>)
-                .map((e) => Ciudad.fromJson(e))
-                .toList();
+        _loadedCities = (citiesResponse as List<dynamic>)
+            .map((e) => Ciudad.fromJson(e))
+            .toList();
       }
 
       // Construir la consulta base
-      var countQuery = _supabase.from('Agencia').select('id');
+      var countQuery = _supabase
+          .from('Agencia')
+          .select('id')
+          .eq('activo', true);
 
-      var agenciesQuery = _supabase.from('Agencia').select('''
+      var agenciesQuery = _supabase
+          .from('Agencia')
+          .select('''
             *,
             agente:Agente(*),
             ciudad:Ciudad(*),
             contratos:ContratoAgencia(*)
-          ''');
+          ''')
+          .eq('activo', true);
 
       // Aplicar filtro por ciudad si existe
       if (selectedCity != null) {
-        // Primero obtenemos las ciudades que coinciden con el nombre
         final ciudadResponse = await _supabase
             .from('Ciudad')
             .select('id')
@@ -109,10 +114,9 @@ class AgencyBloc extends Bloc<AgencyEvent, AgencyState> {
           .order('nombre', ascending: true)
           .range(offset, offset + event.pageSize - 1);
 
-      final pageAgencies =
-          (agenciesResponse as List<dynamic>)
-              .map((e) => Agency.fromJson(e))
-              .toList();
+      final pageAgencies = (agenciesResponse as List<dynamic>)
+          .map((e) => Agency.fromJson(e))
+          .toList();
 
       // Si es loadMore, agregar a la lista existente
       List<Agency> currentAgencies = [];
@@ -141,7 +145,7 @@ class AgencyBloc extends Bloc<AgencyEvent, AgencyState> {
         ),
       );
     } catch (e) {
-      emit(AgencyError(e.toString()));
+      emit(AgencyError('Error al cargar las agencias: ${e.toString()}'));
     }
   }
 
@@ -150,7 +154,7 @@ class AgencyBloc extends Bloc<AgencyEvent, AgencyState> {
     Emitter<AgencyState> emit,
   ) async {
     try {
-      // Si las agencias aún no están cargadas, intentamos cargarlas primero
+      // Si las agencias aún no están cargadas, intentamos cargar la específica
       if (_loadedAgencies.isEmpty) {
         final response = await _supabase
             .from('Agencia')
@@ -161,6 +165,7 @@ class AgencyBloc extends Bloc<AgencyEvent, AgencyState> {
               contratos:ContratoAgencia(*)
             ''')
             .eq('id', event.agencyId)
+            .eq('activo', true)
             .limit(1);
 
         if ((response as List).isNotEmpty) {
@@ -171,7 +176,7 @@ class AgencyBloc extends Bloc<AgencyEvent, AgencyState> {
       } else {
         // Si ya tenemos las agencias cargadas, buscamos por ID
         final agency = _loadedAgencies.firstWhere(
-          (a) => a.id == event.agencyId,
+          (e) => e.id == event.agencyId,
           orElse: () => throw Exception('Agencia no encontrada'),
         );
         emit(AgencyDetailLoaded(agency));
@@ -206,18 +211,23 @@ class AgencyBloc extends Bloc<AgencyEvent, AgencyState> {
       emit(AgencyLoading());
 
       // Construir la consulta base
-      var countQuery = _supabase.from('Agencia').select('id');
+      var countQuery = _supabase
+          .from('Agencia')
+          .select('id')
+          .eq('activo', true);
 
-      var agenciesQuery = _supabase.from('Agencia').select('''
+      var agenciesQuery = _supabase
+          .from('Agencia')
+          .select('''
             *,
             agente:Agente(*),
             ciudad:Ciudad(*),
             contratos:ContratoAgencia(*)
-          ''');
+          ''')
+          .eq('activo', true);
 
       // Aplicar filtro por ciudad si existe
       if (currentState.selectedCity != null) {
-        // Primero obtenemos las ciudades que coinciden con el nombre
         final ciudadResponse = await _supabase
             .from('Ciudad')
             .select('id')
@@ -250,10 +260,9 @@ class AgencyBloc extends Bloc<AgencyEvent, AgencyState> {
           .order('nombre', ascending: true)
           .range(0, currentState.agenciesPerPage - 1);
 
-      final searchResults =
-          (agenciesResponse as List<dynamic>)
-              .map((e) => Agency.fromJson(e))
-              .toList();
+      final searchResults = (agenciesResponse as List<dynamic>)
+          .map((e) => Agency.fromJson(e))
+          .toList();
 
       emit(
         AgencyLoaded(
@@ -302,6 +311,19 @@ class AgencyBloc extends Bloc<AgencyEvent, AgencyState> {
 
     // Recargar todas las agencias sin filtro
     add(LoadAgencies(page: 1, pageSize: currentState.agenciesPerPage));
+  }
+
+  void _onRefreshAgencies(RefreshAgencies event, Emitter<AgencyState> emit) {
+    if (state is! AgencyLoaded) return;
+
+    final currentState = state as AgencyLoaded;
+
+    // Recargar agencias manteniendo filtros actuales
+    add(LoadAgencies(
+      page: 1,
+      pageSize: currentState.agenciesPerPage,
+      filterByCity: currentState.selectedCity,
+    ));
   }
 
   void _onLoadNextPage(LoadNextPage event, Emitter<AgencyState> emit) {

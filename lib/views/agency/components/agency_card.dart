@@ -103,7 +103,7 @@ class AgencyCard extends StatelessWidget {
                     ),
                     const SizedBox(height: 4),
                     Text(
-                      agency.tipoGarantia,
+                      agency.tipoGarantiaVigente,
                       style: theme.textTheme.bodyMedium?.copyWith(
                         fontWeight: FontWeight.w500,
                       ),
