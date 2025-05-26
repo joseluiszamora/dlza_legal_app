@@ -88,8 +88,8 @@ class ContractsExpirationChart extends StatelessWidget {
 
     // Contar contratos por mes
     for (final agency in agencies) {
-      if (agency.contratoAgenciaFin != null) {
-        final contractEndDate = agency.contratoAgenciaFin!;
+      if (agency.finContratoVigente != null) {
+        final contractEndDate = agency.finContratoVigente!;
 
         // Solo considerar contratos que vencen dentro del próximo año
         if (contractEndDate.isAfter(now) &&

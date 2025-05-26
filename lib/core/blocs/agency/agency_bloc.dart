@@ -89,13 +89,8 @@ class AgencyBloc extends Bloc<AgencyEvent, AgencyState> {
       // Aplicar filtro de búsqueda si existe
       if (searchQuery.isNotEmpty) {
         final query = searchQuery.toLowerCase();
-        countQuery = countQuery.or(
-          'nombre.ilike.%$query%,agente.nombres.ilike.%$query%,agente.apellidos.ilike.%$query%,ciudad.nombre.ilike.%$query%',
-        );
-
-        agenciesQuery = agenciesQuery.or(
-          'nombre.ilike.%$query%,agente.nombres.ilike.%$query%,agente.apellidos.ilike.%$query%,ciudad.nombre.ilike.%$query%',
-        );
+        countQuery = countQuery.ilike('nombre', '%$query%');
+        agenciesQuery = agenciesQuery.ilike('nombre', '%$query%');
       }
 
       // Contar total de agencias
@@ -230,14 +225,9 @@ class AgencyBloc extends Bloc<AgencyEvent, AgencyState> {
         }
       }
 
-      // Aplicar filtros de búsqueda
-      countQuery = countQuery.or(
-        'nombre.ilike.%$query%,agente.nombres.ilike.%$query%,agente.apellidos.ilike.%$query%,ciudad.nombre.ilike.%$query%',
-      );
-
-      agenciesQuery = agenciesQuery.or(
-        'nombre.ilike.%$query%,agente.nombres.ilike.%$query%,agente.apellidos.ilike.%$query%,ciudad.nombre.ilike.%$query%',
-      );
+      // Aplicar filtros de búsqueda - solo por nombre de agencia
+      countQuery = countQuery.ilike('nombre', '%$query%');
+      agenciesQuery = agenciesQuery.ilike('nombre', '%$query%');
 
       // Contar total de agencias que coinciden
       final countResponse = await countQuery;
@@ -271,6 +261,7 @@ class AgencyBloc extends Bloc<AgencyEvent, AgencyState> {
         ),
       );
     } catch (e) {
+      print(e.toString());
       emit(AgencyError('Error en la búsqueda: ${e.toString()}'));
     }
   }
