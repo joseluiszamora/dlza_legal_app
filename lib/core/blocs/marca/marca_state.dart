@@ -60,3 +60,12 @@ class MarcaError extends MarcaState {
   @override
   List<Object> get props => [message];
 }
+
+class MarcasProximasAVencerLoaded extends MarcaState {
+  final List<Marca> marcas;
+
+  const MarcasProximasAVencerLoaded({required this.marcas});
+
+  @override
+  List<Object> get props => [marcas];
+}

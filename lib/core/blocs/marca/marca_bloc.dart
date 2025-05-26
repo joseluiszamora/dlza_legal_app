@@ -14,6 +14,7 @@ class MarcaBloc extends Bloc<MarcaEvent, MarcaState> {
     on<LoadMoreMarcas>(_onLoadMoreMarcas);
     on<SearchMarcas>(_onSearchMarcas);
     on<RefreshMarcas>(_onRefreshMarcas);
+    on<LoadMarcasProximasAVencer>(_onLoadMarcasProximasAVencer);
   }
 
   Future<void> _onLoadMarcas(LoadMarcas event, Emitter<MarcaState> emit) async {
@@ -133,6 +134,21 @@ class MarcaBloc extends Bloc<MarcaEvent, MarcaState> {
           searchQuery: searchQuery,
         ),
       );
+    } catch (e) {
+      emit(MarcaError(e.toString()));
+    }
+  }
+
+  Future<void> _onLoadMarcasProximasAVencer(
+    LoadMarcasProximasAVencer event,
+    Emitter<MarcaState> emit,
+  ) async {
+    try {
+      final marcas = await _marcaRepository.getMarcasProximasAVencer(
+        limit: event.limit,
+      );
+
+      emit(MarcasProximasAVencerLoaded(marcas: marcas));
     } catch (e) {
       emit(MarcaError(e.toString()));
     }

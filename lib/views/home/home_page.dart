@@ -1,6 +1,7 @@
 import 'package:dlza_legal_app/views/home/components/birthdays_list.dart';
 import 'package:dlza_legal_app/views/home/components/contracts_expiration_chart.dart';
 import 'package:dlza_legal_app/views/home/components/user_profile_section.dart';
+import 'package:dlza_legal_app/views/home/components/brands_expiration_list.dart';
 import 'package:flutter/material.dart';
 import 'package:dlza_legal_app/core/blocs/agency/agency_bloc.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -44,6 +45,17 @@ class HomePage extends StatelessWidget {
               ),
               const SizedBox(height: 8),
               ContractsExpirationChart(),
+
+              //* Lista de marcas próximas a vencer
+              const SizedBox(height: 24),
+              Text(
+                'Marcas Próximas a Vencer',
+                style: theme.textTheme.titleMedium?.copyWith(
+                  fontWeight: FontWeight.bold,
+                ),
+              ),
+              const SizedBox(height: 8),
+              BrandsExpirationList(),
 
               // Aquí puedes añadir más contenido para la página de inicio
               const SizedBox(height: 24),

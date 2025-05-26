@@ -28,3 +28,12 @@ class SearchMarcas extends MarcaEvent {
 }
 
 class RefreshMarcas extends MarcaEvent {}
+
+class LoadMarcasProximasAVencer extends MarcaEvent {
+  final int limit;
+
+  const LoadMarcasProximasAVencer({this.limit = 10});
+
+  @override
+  List<Object> get props => [limit];
+}

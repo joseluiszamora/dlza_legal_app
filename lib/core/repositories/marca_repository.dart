@@ -100,4 +100,37 @@ class MarcaRepository {
       throw Exception('Error al obtener total de marcas: $e');
     }
   }
+
+  /// Obtiene marcas próximas a vencer (siguientes 90 días)
+  Future<List<Marca>> getMarcasProximasAVencer({int limit = 10}) async {
+    try {
+      final response = await _supabase
+          .from('Marca')
+          .select('*')
+          .not('fechaExpiracionRegistro', 'is', null)
+          .order('fechaExpiracionRegistro', ascending: true);
+
+      List<Marca> todasLasMarcas =
+          (response as List).map((json) => Marca.fromJson(json)).toList();
+
+      // Filtrar marcas que vencen en los próximos 90 días
+      final ahora = DateTime.now();
+      final en90Dias = ahora.add(const Duration(days: 180));
+
+      final marcasProximas =
+          todasLasMarcas
+              .where((marca) {
+                if (marca.fechaExpiracionRegistro == null) return false;
+                final fechaExpiracion = marca.fechaExpiracionRegistro!;
+                return fechaExpiracion.isAfter(ahora) &&
+                    fechaExpiracion.isBefore(en90Dias);
+              })
+              .take(limit)
+              .toList();
+
+      return marcasProximas;
+    } catch (e) {
+      throw Exception('Error al cargar marcas próximas a vencer: $e');
+    }
+  }
 }
