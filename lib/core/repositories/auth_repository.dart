@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'package:bcrypt/bcrypt.dart';
 import 'package:dlza_legal_app/core/models/usuario.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
@@ -10,19 +11,25 @@ class AuthRepository {
   // Login del usuario
   Future<Usuario> login(String username, String password) async {
     try {
-      // Buscar usuario por username
-      final response =
+      // Obtener el usuario con la contraseña hasheada para verificación
+      final userResponse =
           await _supabaseClient
               .from('Usuario')
-              .select()
+              .select('*, password')
               .eq('username', username)
-              .eq(
-                'password',
-                password,
-              ) // En producción, esto debería ser hasheado
               .single();
 
-      final usuario = Usuario.fromJson(response);
+      // Verificar la contraseña hasheada
+      final hashedPassword = userResponse['password'] as String;
+      final passwordMatches = BCrypt.checkpw(password, hashedPassword);
+      if (!passwordMatches) {
+        throw Exception('Credenciales incorrectas');
+      }
+
+      // Crear usuario sin incluir la contraseña
+      final usuarioData = Map<String, dynamic>.from(userResponse);
+      usuarioData.remove('password'); // Remover password por seguridad
+      final usuario = Usuario.fromJson(usuarioData);
 
       // Verificar si el usuario está activo
       if (!usuario.activo) {
@@ -39,7 +46,8 @@ class AuthRepository {
       }
       throw Exception('Error al iniciar sesión: ${e.message}');
     } catch (e) {
-      if (e.toString().contains('Usuario inactivo')) {
+      if (e.toString().contains('Usuario inactivo') ||
+          e.toString().contains('Credenciales incorrectas')) {
         rethrow;
       }
       throw Exception('Error al iniciar sesión: $e');

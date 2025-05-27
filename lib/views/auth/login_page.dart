@@ -86,7 +86,7 @@ class _LoginPageState extends State<LoginPage> {
                         children: [
                           // Logo o título
                           Icon(
-                            Icons.account_balance,
+                            Icons.icecream,
                             size: 64,
                             color: theme.colorScheme.primary,
                           ),
