@@ -31,8 +31,8 @@ class _NavigationBarPageState extends State<NavigationBarPage> {
 
     //* Pages List
     List<Widget> pages = [
-      const EmployeePage(),
       const HomePage(),
+      const EmployeePage(),
       const AgencyPage(),
       const MarcaPage(),
     ];
@@ -85,8 +85,8 @@ class _NavigationBarPageState extends State<NavigationBarPage> {
                       ? AppColors.primary
                       : Colors.white,
               tabs: [
-                GButton(icon: LineIcons.userCircle, text: 'Personas'),
                 GButton(icon: LineIcons.home, text: 'Inicio'),
+                GButton(icon: LineIcons.userCircle, text: 'Personas'),
                 GButton(icon: LineIcons.fileContract, text: 'Agencias'),
                 GButton(icon: LineIcons.sign, text: 'Marcas'),
               ],
