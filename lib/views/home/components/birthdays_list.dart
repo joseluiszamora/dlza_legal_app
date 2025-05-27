@@ -1,36 +1,99 @@
 import 'package:dlza_legal_app/core/models/employee.dart';
+import 'package:dlza_legal_app/core/blocs/employee/employee_bloc.dart';
 import 'package:intl/intl.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
-class BirthdaysList extends StatelessWidget {
+class BirthdaysList extends StatefulWidget {
   const BirthdaysList({super.key});
+
+  @override
+  State<BirthdaysList> createState() => _BirthdaysListState();
+}
+
+class _BirthdaysListState extends State<BirthdaysList> {
+  @override
+  void initState() {
+    super.initState();
+    // Cargar empleados si no están cargados
+    context.read<EmployeeBloc>().add(LoadEmployees());
+  }
 
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
-    final upcomingBirthdays = _getUpcomingBirthdays(15);
-    return Container(
-      height: 150,
-      decoration: BoxDecoration(
-        color: theme.colorScheme.surface,
-        borderRadius: BorderRadius.circular(12),
-      ),
-      child:
-          upcomingBirthdays.isEmpty
-              ? Center(
-                child: Text(
-                  'No hay cumpleaños próximos',
-                  style: theme.textTheme.bodyMedium,
-                ),
-              )
-              : ListView.builder(
-                scrollDirection: Axis.horizontal,
-                itemCount: upcomingBirthdays.length,
-                itemBuilder: (context, index) {
-                  final employee = upcomingBirthdays[index];
-                  return _buildBirthdayCard(context, employee);
-                },
+
+    return BlocBuilder<EmployeeBloc, EmployeeState>(
+      builder: (context, state) {
+        if (state is EmployeeLoading) {
+          return Container(
+            height: 150,
+            decoration: BoxDecoration(
+              color: theme.colorScheme.surface,
+              borderRadius: BorderRadius.circular(12),
+            ),
+            child: const Center(child: CircularProgressIndicator()),
+          );
+        }
+
+        if (state is EmployeeError) {
+          return Container(
+            height: 150,
+            decoration: BoxDecoration(
+              color: theme.colorScheme.surface,
+              borderRadius: BorderRadius.circular(12),
+            ),
+            child: Center(
+              child: Text(
+                'Error al cargar empleados',
+                style: theme.textTheme.bodyMedium,
               ),
+            ),
+          );
+        }
+
+        if (state is EmployeeLoaded) {
+          final upcomingBirthdays = _getUpcomingBirthdays(state.employees, 15);
+
+          return Container(
+            height: 150,
+            decoration: BoxDecoration(
+              color: theme.colorScheme.surface,
+              borderRadius: BorderRadius.circular(12),
+            ),
+            child:
+                upcomingBirthdays.isEmpty
+                    ? Center(
+                      child: Text(
+                        'No hay cumpleaños próximos',
+                        style: theme.textTheme.bodyMedium,
+                      ),
+                    )
+                    : ListView.builder(
+                      scrollDirection: Axis.horizontal,
+                      itemCount: upcomingBirthdays.length,
+                      itemBuilder: (context, index) {
+                        final employee = upcomingBirthdays[index];
+                        return _buildBirthdayCard(context, employee);
+                      },
+                    ),
+          );
+        }
+
+        return Container(
+          height: 150,
+          decoration: BoxDecoration(
+            color: theme.colorScheme.surface,
+            borderRadius: BorderRadius.circular(12),
+          ),
+          child: Center(
+            child: Text(
+              'No hay empleados cargados',
+              style: theme.textTheme.bodyMedium,
+            ),
+          ),
+        );
+      },
     );
   }
 
@@ -117,10 +180,7 @@ class BirthdaysList extends StatelessWidget {
     );
   }
 
-  List<Employee> _getUpcomingBirthdays(int limit) {
-    // TODO: Integrar con EmployeeBloc para obtener empleados reales
-    final List<Employee> employees = []; // Lista vacía temporal
-
+  List<Employee> _getUpcomingBirthdays(List<Employee> employees, int limit) {
     final now = DateTime.now();
     final maxDateLimit = DateTime(
       now.year,

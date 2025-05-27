@@ -5,6 +5,7 @@ import 'package:dlza_legal_app/views/home/components/brands_expiration_list.dart
 import 'package:dlza_legal_app/views/home/components/employees_by_area_chart.dart';
 import 'package:flutter/material.dart';
 import 'package:dlza_legal_app/core/blocs/agency/agency_bloc.dart';
+import 'package:dlza_legal_app/core/blocs/employee/employee_bloc.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 class HomePage extends StatelessWidget {
@@ -14,8 +15,11 @@ class HomePage extends StatelessWidget {
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
 
-    return BlocProvider(
-      create: (context) => AgencyBloc()..add(LoadAgencies()),
+    return MultiBlocProvider(
+      providers: [
+        BlocProvider(create: (context) => AgencyBloc()..add(LoadAgencies())),
+        BlocProvider(create: (context) => EmployeeBloc()..add(LoadEmployees())),
+      ],
       child: SafeArea(
         child: SingleChildScrollView(
           padding: const EdgeInsets.all(16.0),

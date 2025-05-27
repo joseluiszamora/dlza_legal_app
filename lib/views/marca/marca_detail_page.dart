@@ -57,7 +57,7 @@ class _MarcaDetailPageState extends State<MarcaDetailPage> {
     return Scaffold(
       appBar: AppBar(
         title: Text(_marca?.nombre ?? 'Detalles de Marca'),
-        backgroundColor: AppColors.primary,
+        backgroundColor: Theme.of(context).primaryColor,
         foregroundColor: Colors.white,
       ),
       body:

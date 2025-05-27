@@ -88,7 +88,7 @@ class _NavigationBarPageState extends State<NavigationBarPage> {
                 GButton(icon: LineIcons.home, text: 'Inicio'),
                 GButton(icon: LineIcons.userCircle, text: 'Personas'),
                 GButton(icon: LineIcons.fileContract, text: 'Agencias'),
-                GButton(icon: LineIcons.sign, text: 'Marcas'),
+                GButton(icon: LineIcons.certificate, text: 'Marcas'),
               ],
               selectedIndex: _pageSelected,
               onTabChange: (index) {

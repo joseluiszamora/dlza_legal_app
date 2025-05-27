@@ -199,39 +199,39 @@ class AgencyDetail extends StatelessWidget {
               ],
             ),
             // Botón para descargar el contrato en PDF
-            Padding(
-              padding: const EdgeInsets.only(top: 16.0),
-              child: ElevatedButton.icon(
-                onPressed: () => _downloadContractPdf(),
-                icon: Icon(
-                  LineIcons.pdfFile,
-                  color:
-                      theme.brightness == Brightness.light
-                          ? Colors.white
-                          : Colors.black87,
-                ),
-                label: Text(
-                  'Descargar Contrato',
-                  style: TextStyle(
-                    color:
-                        theme.brightness == Brightness.light
-                            ? Colors.white
-                            : Colors.black87,
-                  ),
-                ),
-                style: ElevatedButton.styleFrom(
-                  backgroundColor: Colors.red[300],
-                  foregroundColor: Colors.white,
-                  padding: const EdgeInsets.symmetric(
-                    horizontal: 16,
-                    vertical: 12,
-                  ),
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(8),
-                  ),
-                ),
-              ),
-            ),
+            // Padding(
+            //   padding: const EdgeInsets.only(top: 16.0),
+            //   child: ElevatedButton.icon(
+            //     onPressed: () => _downloadContractPdf(),
+            //     icon: Icon(
+            //       LineIcons.pdfFile,
+            //       color:
+            //           theme.brightness == Brightness.light
+            //               ? Colors.white
+            //               : Colors.black87,
+            //     ),
+            //     label: Text(
+            //       'Descargar Contrato',
+            //       style: TextStyle(
+            //         color:
+            //             theme.brightness == Brightness.light
+            //                 ? Colors.white
+            //                 : Colors.black87,
+            //       ),
+            //     ),
+            //     style: ElevatedButton.styleFrom(
+            //       backgroundColor: Colors.red[300],
+            //       foregroundColor: Colors.white,
+            //       padding: const EdgeInsets.symmetric(
+            //         horizontal: 16,
+            //         vertical: 12,
+            //       ),
+            //       shape: RoundedRectangleBorder(
+            //         borderRadius: BorderRadius.circular(8),
+            //       ),
+            //     ),
+            //   ),
+            // ),
           ]),
 
           const SizedBox(height: 20),
@@ -415,7 +415,7 @@ class AgencyDetail extends StatelessWidget {
         'name': 'Factura de Servicio Básico',
         'available': agency.facturaServicioBasico,
       },
-      {'name': 'NIT', 'available': agency.nit},
+      // {'name': 'NIT', 'available': agency.nitAgencia},
       {
         'name': 'Licencia de Funcionamiento',
         'available': agency.licenciaDeFuncionamiento,

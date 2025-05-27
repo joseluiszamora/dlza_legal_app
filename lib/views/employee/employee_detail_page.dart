@@ -14,7 +14,11 @@ class EmployeeDetailPage extends StatelessWidget {
     final theme = Theme.of(context);
 
     return Scaffold(
-      appBar: AppBar(title: Text('Detalles del Empleado'), elevation: 0),
+      appBar: AppBar(
+        title: Text('Detalles del Empleado'),
+        elevation: 0,
+        backgroundColor: Theme.of(context).primaryColor,
+      ),
       body: SingleChildScrollView(
         padding: const EdgeInsets.all(16.0),
         child: Column(
